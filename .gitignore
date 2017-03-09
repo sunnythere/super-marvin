@@ -1,0 +1,4 @@
+node_modules
+app/firebase.jsx
+firebase
+firebase-debug.log

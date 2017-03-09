@@ -1,0 +1,358 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* ------------------------set-------------------------- */
+
+
+html {
+  /*color: rgb(250,250,250);*/
+  height: 100%;
+  font-size: 85%;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  height: 100%;
+  min-height: 100vh;
+  font-size: 1.3rem;
+}
+
+p {
+  font-size: 1.1rem;
+  display: inline;
+}
+
+
+h1 {  font-size: 3.6rem;   font-family: 'Lato', sans-serif;}
+h2 {
+  display: inline-block;
+  font-size: 2.4rem;
+  font-family: 'Lato', sans-serif;
+  margin: .5rem;
+  color: rgba(252,252,252,0.8);
+}
+h3 {  font-size: 2.0rem;   font-family: 'Lato', sans-serif;}
+h4 {
+  display: inline-block;
+  font-size: 1.8rem;
+  font-family: 'Lato', sans-serif;
+  margin: .3rem;
+}
+h5 {  font-size: 1.2rem;   font-family: 'Lato', sans-serif;}
+h6 {  font-size: 1.0rem;   font-family: 'Lato', sans-serif;}
+
+/* EnterVisitor */
+#div-main-visitor {
+  padding: 0rem;
+  min-width: 760px;
+}
+.parallax {
+    background-image: url("img/IMG_1683.JPG");
+/*  background-color: lightgreyy;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;*/
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+#div-view {
+  padding: 2.5rem 2rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* EnterVisitor -> Scroll -> Navbar */
+#navbar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 60px;
+  background-color: transparent;
+  color: #000000;
+  padding: 7px 16px;
+  z-index: 2;
+  min-width: 750px;
+  box-sizing: border-box;
+}
+#catface {
+  float: right;
+  /*position: fixed;
+  top: 10px;
+  right: 15px;
+  display: inline;
+  text-align: right;*/
+}
+.menu {
+  position: absolute;
+  top: 64px;
+  right: 30px;
+  background-color: white;
+  z-index: 5;
+  /*width: 100px;*/
+  /*  height: 50px*/;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* EnterVisitor -> Scroll -> Navbar2 */
+#navbar2 {
+  position: fixed;
+  top: 60px;
+  width: 100%;
+  background-color: transparent;
+  color: #000000;
+  padding: 3px 15px;
+  min-width: 750px;
+  box-sizing: border-box;
+}
+#clock-span {
+  float: right;
+}
+.heading {
+  font-size: 1.1rem;
+}
+#visitor-headings {
+  padding: 0rem 1.8rem;
+}
+.hspace-1 {
+  display: inline-block;
+  width: 4.1rem;
+}
+.hspace-1a {
+  display: inline-block;
+  width: 5.5rem;
+}
+.hspace-1b {
+  display: inline-block;
+  width: 6.2rem;
+}
+.hspace-2 {
+  display: inline-block;
+  width: 6.6rem;
+}
+.hspace-2a {
+  display: inline-block;
+  width: 7.4rem;
+}
+.hspace-3 {
+  display: inline-block;
+  width: 8.5rem;
+}
+.hspace-4 {
+  display: inline-block;
+  width: 9.3rem;
+}
+.hspace-5 {
+  display: inline-block;
+  width: 12.2rem;
+}
+
+
+/* VisitorsContainer */
+.div-container {
+  margin-top: 105px;
+  padding: 1.5rem 1.5rem;
+  background-color: rgba(250,250,250,0.6);
+  min-width: 730px;
+}
+
+/* VisitorContainer -> Visitors */
+.div-inner-container {
+  background-color: rgba(250,250,250,0.8);
+  min-width: 730px;
+}
+.visitor-row {  /*each visitor entry*/
+  /*border-bottom: 1px dashed darkgrey;*/
+  min-width: 720px;
+}
+.div-inner {  /*cells w/in visitor entry*/
+  display: inline-block;
+  padding: .5rem .3rem;
+  height: 100%;
+  vertical-align: middle;
+}
+#visitorCount {
+  width: 2rem;
+}
+.readOnly {
+  color: darkgrey;
+}
+.name-field {
+  width: 8rem;
+}
+.name-field:focus {
+  background-color: white;
+}
+.name-field:blur {
+  background-color: rgba(0,0,0,0);
+}
+#checkoutBtn {
+  background-color: lightpink;
+  border: none;
+  border-radius: 3px;
+  width: auto;
+  padding: 5px 12px 7px 12px;
+  transition: background .2s ease-in, transform .15s ease-in-out;
+}
+#checkoutBtn:hover {
+  background-color: #FC6986;
+  transform: scale(1.05);
+}
+#checkoutBtn:active {
+  transform: scale(1.2);
+}
+
+.space-top1 {
+  padding-top: .4rem;
+}
+.space-top {
+  padding-top: .8rem;
+}
+.red {
+  color: red;
+}
+.small {
+  font-size: small;
+}
+.hr-divider {
+  border-top: none;
+  border-bottom: 1px dashed darkgrey;
+  margin: 0;
+}
+input {
+  border: none;
+  padding: 2px;
+  margin: 2px;
+  background-color: rgba(0,0,0,0);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.1rem;
+}
+label {
+  font-size: 1.1rem;
+}
+
+/* VisitorContainer -> new visitor input */
+#newVisitor-div {
+  text-align: center;
+  margin: .5rem;
+}
+.newVisitorForm {
+  display: inline-block;
+}
+.no-arrows {
+  -moz-appearance:textfield;
+}
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#visitorNumInput {
+  width: 2.6rem;
+  border: 1px solid turquoise;
+  border-radius: 5px 0px 0px 5px;
+  background-color: white;
+  padding: 5px 0px 7px 10px;
+  margin: 5px 0px;
+}
+#newVisitorBtn {
+  background-color: turquoise;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  width: auto;
+  padding: 6px 12px 8px 12px;
+  margin: 5px 0px;
+  transition: background .5s ease-in;
+}
+#newVisitor-div:hover > #newVisitorBtn {
+  background-color: purple;
+}
+
+/* VisitorContainer -> rightclick */
+  /* variable x-y, style in component */
+.context-menu-items {
+  padding: .5rem;
+}
+.icon-space {
+  display: inline;
+  vertical-align: top;
+}
+
+/* VisitorContainer -> ctrlpanel */
+#ctrlMenu {
+  position: fixed;
+  height: 160px;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -70px;
+  margin-left: -150px;
+  z-index: 5;
+  border-radius: 5px;
+  padding: 0.8rem 1rem;
+  background-color: white;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}
+.number-ctrl {
+  width: 3rem;
+  border: 1px solid darkgrey;
+  border-radius: 3px;
+}
+#ctrlbtn {
+  background-color: darkgrey;
+  border: none;
+  border-radius: 3px;
+  width: auto;
+  padding: 5px 12px 7px 12px;
+  float: right;
+}
+
+input[type=submit] {
+  outline: none;
+}
