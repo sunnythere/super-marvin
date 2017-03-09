@@ -356,3 +356,19 @@ label {
 input[type=submit] {
   outline: none;
 }
+
+
+#warningPop {
+  position: fixed;
+  height: 120px;
+  width: 200px;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -100px;
+  z-index: 5;
+  border-radius: 5px;
+  padding: 0.8rem 1rem;
+  background-color: white;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}

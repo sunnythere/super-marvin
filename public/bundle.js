@@ -28915,6 +28915,9 @@
 	exports.default = firebase.initializeApp(config);
 	var database = exports.database = firebase.database;
 	var auth = exports.auth = firebase.auth;
+	
+	//https://console.firebase.google.com/project/meow-8c872/overview
+	//https://meow-8c872.firebaseapp.com
 
 /***/ },
 /* 273 */
@@ -30861,34 +30864,62 @@
 	
 	    _this.state = {
 	      email: '',
-	      pswd: ''
+	      pswd0: '',
+	      dirty0: false,
+	      pswd1: '',
+	      dirty1: false,
+	      msg: 'your passwords do not match',
+	      pMismatch: false
 	    };
 	
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handlePWMatch = _this.handlePWMatch.bind(_this);
 	
 	    _this.handleChange = function (type) {
 	      return function (event) {
 	        var value = event.target.value;
 	
 	        _this.setState(_defineProperty({}, type, value));
+	
+	        if (type.match(/[0-9]/)) {
+	          var num = type.match(/[0-9]/)[0];
+	          var key = 'dirty' + num;
+	          _this.setState(_defineProperty({}, key, true));
+	        }
 	      };
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(SignUp, [{
+	    key: 'handlePWMatch',
+	    value: function handlePWMatch(evt) {
+	      console.log('match evt ', evt.target);
+	      console.log('0', this.state.pswd0, '1', this.state.pswd1);
+	      if (this.state.pswd0 === this.state.pswd1) {
+	        this.setState({ pMismatch: false });
+	      }
+	      if (this.state.dirty0 && this.state.dirty1 && this.state.pswd0 !== this.state.pswd1) {
+	        this.setState({ pMismatch: true });
+	      }
+	    }
+	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(evt) {
 	      evt.preventDefault();
-	      var email = this.state.email;
-	      var pswd = this.state.pswd;
+	      if (this.state.pMismatch) {
+	        this.setState({ msg: 'Please enter matching passwords.' });
+	      } else {
+	        var email = this.state.email;
+	        var pswd = this.state.pswd;
 	
-	      (0, _firebase.auth)().createUserWithEmailAndPassword(email, pswd).catch(function (error) {
-	        // Handle Errors here.
-	        var errorCode = error.code;
-	        var errorMessage = error.message;
-	        console.log(errorCode + ': ' + errorMessage);
-	      });
+	        (0, _firebase.auth)().createUserWithEmailAndPassword(email, pswd).catch(function (error) {
+	          // Handle Errors here.
+	          var errorCode = error.code;
+	          var errorMessage = error.message;
+	          console.log(errorCode + ': ' + errorMessage);
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -30905,7 +30936,17 @@
 	          'form',
 	          { onSubmit: this.handleSubmit },
 	          _react2.default.createElement('input', { type: 'email', placeholder: 'email', value: this.state.email, onChange: this.handleChange('email') }),
-	          _react2.default.createElement('input', { type: 'password', placeholder: 'password', value: this.state.pswd, onChange: this.handleChange('pswd') }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { type: 'password', placeholder: 'password', value: this.state.pswd0, onChange: this.handleChange('pswd0'), onBlur: this.handlePWMatch }),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('input', { type: 'password', placeholder: 'password again', value: this.state.pswd1, onChange: this.handleChange('pswd1'), onBlur: this.handlePWMatch }),
+	          _react2.default.createElement('br', null),
+	          this.state.pMismatch && _react2.default.createElement(
+	            'div',
+	            null,
+	            this.state.msg
+	          ),
+	          _react2.default.createElement('br', null),
 	          _react2.default.createElement('input', { type: 'submit', value: 'submit' })
 	        )
 	      );
@@ -32285,7 +32326,8 @@
 	    visitors: state.visitors.visitorsToday,
 	    oneVisitor: state.visitors.oneVisitor,
 	    rate: state.cost.rate,
-	    timeUnit: state.cost.time
+	    timeUnit: state.cost.time,
+	    currentUser: state.user.currentUser
 	  };
 	};
 	
@@ -32310,7 +32352,8 @@
 	      showContextMenu: false,
 	      showCtrlPanel: false,
 	      rate: props.rate,
-	      timeUnit: props.timeUnit
+	      timeUnit: props.timeUnit,
+	      showWarning: false
 	    };
 	
 	    _this.addNewVisitor = _this.addNewVisitor.bind(_this);
@@ -32330,6 +32373,7 @@
 	    _this.handleCtrlSubmit = _this.handleCtrlSubmit.bind(_this);
 	    _this.handleChangeMinor = _this.handleChangeMinor.bind(_this);
 	    _this.handleChangeUnder3 = _this.handleChangeUnder3.bind(_this);
+	    _this.warningClose = _this.warningClose.bind(_this);
 	
 	    _this.handleChange = function (field) {
 	      return function (evt) {
@@ -32432,6 +32476,10 @@
 	    key: 'addNewVisitor',
 	    value: function addNewVisitor(evt) {
 	      evt.preventDefault();
+	      if (this.props && !this.props.currentUser.email) {
+	        this.setState({ showWarning: true });
+	        window.addEventListener('click', this.warningClose, false);
+	      }
 	      var newTime = new Date();
 	      var count = Object.keys(this.props.visitors).length + 1;
 	      var newVisitorObj = {
@@ -32700,6 +32748,15 @@
 	        window.removeEventListener('click', this.contextMenuClose, false);
 	      }
 	    }
+	  }, {
+	    key: 'warningClose',
+	    value: function warningClose(evt) {
+	      evt.preventDefault();
+	      if (evt.target.id !== 'warning') {
+	        this.setState({ showWarning: false });
+	        window.removeEventListener('click', this.warningClose, false);
+	      }
+	    }
 	
 	    // --------------- RENDER ---------------
 	
@@ -32772,6 +32829,11 @@
 	            ' minutes',
 	            _react2.default.createElement('input', { type: 'submit', defaultValue: 'change', id: 'ctrlbtn' })
 	          )
+	        ),
+	        this.state.showWarning && _react2.default.createElement(
+	          'div',
+	          { className: 'warning', id: 'warningPop' },
+	          'Only authorized users can add visitors!'
 	        )
 	      );
 	    }

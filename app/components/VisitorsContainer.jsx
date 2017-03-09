@@ -10,7 +10,8 @@ const mapState = (state) => ({
   visitors: state.visitors.visitorsToday,
   oneVisitor: state.visitors.oneVisitor,
   rate: state.cost.rate,
-  timeUnit: state.cost.time
+  timeUnit: state.cost.time,
+  currentUser: state.user.currentUser
 })
 
 const mapDispatch = { updateVisitorLog, addToVisitorLog, deleteOneVisitor, getAllVisitorsToday, changeRate, changeTime}
@@ -32,7 +33,8 @@ export default connect(mapState,mapDispatch)(class VisitorsContainer extends Rea
       showContextMenu: false,
       showCtrlPanel: false,
       rate: props.rate,
-      timeUnit: props.timeUnit
+      timeUnit: props.timeUnit,
+      showWarning: false
     }
 
     this.addNewVisitor = this.addNewVisitor.bind(this)
@@ -52,6 +54,7 @@ export default connect(mapState,mapDispatch)(class VisitorsContainer extends Rea
     this.handleCtrlSubmit = this.handleCtrlSubmit.bind(this)
     this.handleChangeMinor = this.handleChangeMinor.bind(this)
     this.handleChangeUnder3 = this.handleChangeUnder3.bind(this)
+    this.warningClose = this.warningClose.bind(this)
 
     this.handleChange = (field) => (evt) => {
       evt.preventDefault()
@@ -142,6 +145,10 @@ export default connect(mapState,mapDispatch)(class VisitorsContainer extends Rea
 
   addNewVisitor(evt) {
     evt.preventDefault()
+    if (this.props && !this.props.currentUser.email) {
+      this.setState({ showWarning: true })
+      window.addEventListener('click', this.warningClose, false)
+    }
     const newTime = new Date()
     const count = Object.keys(this.props.visitors).length+1
     const newVisitorObj = {
@@ -394,6 +401,14 @@ console.log('START UPDATE TOTALCOST')
    }
   }
 
+  warningClose(evt) {
+    evt.preventDefault()
+    if(evt.target.id !== 'warning') {
+      this.setState({ showWarning: false })
+      window.removeEventListener('click', this.warningClose, false)
+   }
+  }
+
 
 // --------------- RENDER ---------------
   render() {
@@ -458,6 +473,12 @@ console.log('START UPDATE TOTALCOST')
           <input type="number" name="timeUnit" id="ctrl2" className="number-ctrl" value={this.state.timeUnit} onChange={this.handleChange('timeUnit')} /> minutes
           <input type="submit" defaultValue="change" id="ctrlbtn"/>
         </form>
+        </div>
+        }
+
+        { this.state.showWarning &&
+        <div className="warning" id="warningPop">
+        Only authorized users can add visitors!
         </div>
         }
 
