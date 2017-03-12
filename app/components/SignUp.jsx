@@ -51,7 +51,7 @@ handleSubmit(evt) {
     this.setState({ msg: 'Please enter matching passwords.'})
   } else {
     const email = this.state.email
-    const pswd = this.state.pswd
+    const pswd = this.state.pswd0
 
     auth().createUserWithEmailAndPassword(email, pswd).catch(function(error) {
       // Handle Errors here.

@@ -372,3 +372,23 @@ input[type=submit] {
   background-color: white;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
+
+
+/* catflick */
+#catflick-div {
+  height: 170px;
+  width: 170px;
+  display: block;
+  background: transparent url(img/catoutline-sprite2.png) 0 0 no-repeat;
+  margin: 4em auto;
+  animation: flick 1200ms steps(11);
+}
+
+@keyframes flick {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -1870px;
+  }
+}

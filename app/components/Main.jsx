@@ -17,6 +17,7 @@ import Navbar from './Navbar'
 import Navbar2 from './Navbar2'
 import VisitorsContainer from './VisitorsContainer'
 import VisitorHistory from './VisitorHistory'
+import CatFlick from './CatFlick'
 
 import { getAllCats, getOneCat } from '../reducers/feline'
 import { getAllVisitorsToday, updateVisitorLog } from '../reducers/visitors'
@@ -56,7 +57,8 @@ ReactDOM.render(
   <Provider store={store}>
   <Router history={browserHistory}>
       <Route path='/' component={Enter} onEnter={onEnter}>
-
+        <IndexRedirect to="/cat" />
+        <Route path="/cat" component={CatFlick} />
         {//<Route path='/cats' component={Cards} onEnter={onEnterCards} />
       }
         <Route path="/signup" component={SignUp} />
