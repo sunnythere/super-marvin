@@ -1,57 +1,8 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-ol, ul {
-  list-style: none;
-}
-blockquote, q {
-  quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-/* ------------------------set-------------------------- */
-
 
 html {
   /*color: rgb(250,250,250);*/
   height: 100%;
+  width: 100%;
   font-size: 85%;
 }
 
@@ -59,7 +10,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   height: 100%;
   min-height: 100vh;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 p {
@@ -86,6 +37,31 @@ h4 {
 h5 {  font-size: 1.2rem;   font-family: 'Lato', sans-serif;}
 h6 {  font-size: 1.0rem;   font-family: 'Lato', sans-serif;}
 
+
+/* grid */
+.row {
+  overflow: hidden
+}
+[class*='col-'] {
+  box-sizing: border-box;
+  float: left;
+}
+
+.col-6-s {
+  width: 50%;
+}
+.col-4-s {
+  width: 33.3%;
+}
+.col-3-s {
+  width: 25%;
+}
+.col-2-s {
+  width: 16.66%;
+}
+
+
+
 /* EnterVisitor */
 #div-main-visitor {
   padding: 0rem;
@@ -103,7 +79,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Lato', sans-serif;}
   background-size: 100%;
 }
 #div-view {
-  padding: 2.5rem 2rem;
+  padding: 5% 2%;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -373,22 +349,63 @@ input[type=submit] {
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
+@media all and (min-width: 450px) {
+
+}
 
 /* catflick */
 #catflick-div {
   height: 170px;
-  width: 170px;
+  max-width: 235px;
   display: block;
+  margin: 20% auto 0 auto;
   background: transparent url(img/catoutline-sprite2.png) 0 0 no-repeat;
-  margin: 4em auto;
-  animation: flick 1200ms steps(11);
+  animation: flick 1200ms 600ms steps(11);
 }
 
 @keyframes flick {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 -1870px;
-  }
+  /* 11 frames */
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -1870px; }
 }
+
+@keyframes flickW {
+  /* 4 frames */
+  0% { background-position: 0 -1190px; }
+  100% { background-position: 0 -1870px; }
+}
+
+#catflick-div:hover {
+  animation: flickW 1200ms steps(4);
+}
+
+#msg-div {
+  max-width: 235px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#msg {
+  box-sizing: border-box;
+  margin-top: .6rem;
+  height: 5rem;
+  width: 90%;
+  border: 3px double darkgrey;
+  outline: none;
+}
+#mail-img{
+  box-sizing: border-box;
+  height: 18px;
+  width: 25px;
+  margin: .2rem .8rem;
+  float: right;
+}
+#mail-img:hover {
+  margin-top: .2rem;
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.2);
+}
+#mail-img:active {
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+

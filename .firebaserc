@@ -1,5 +1,6 @@
 {
   "projects": {
-    "cat": "meow-8c872"
+    "cat": "meow-8c872",
+    "default": "meow-8c872"
   }
 }

@@ -122,7 +122,7 @@
 	});
 	// import AddCat from './AddCat'
 	// import OneCat from './OneCat'
-	//Main.jsx
+	
 	
 	_store2.default.dispatch((0, _feline.getAllCats)());
 	
@@ -29847,21 +29847,6 @@
 	  };
 	};
 	
-	// export const returnPrevKey = (key) =>
-	//   (dispatch) =>
-	//     const date = new Date()
-	//     let ref = database()
-	//       .ref(`visitors/${date.toDateString()}`)
-	//       .child(`${key}`)
-	
-	//     const listener = ref
-	//       .on('child_changed', (childSnapshot, prevChildKey) {
-	//       return prevChildKey
-	//     });
-	
-	//   return () => ref.off('value', listener)
-	
-	
 	var deleteOneVisitor = exports.deleteOneVisitor = function deleteOneVisitor(key) {
 	  return function (dispatch) {
 	    var date = new Date();
@@ -33107,7 +33092,7 @@
 	      _react2.default.createElement(
 	        'span',
 	        { className: 'icon-space' },
-	        _react2.default.createElement('img', { src: 'img/trash.png' }),
+	        _react2.default.createElement('img', { src: 'img/reversearrow.png' }),
 	        '\xA0 undo checkout'
 	      )
 	    ),
@@ -33484,21 +33469,134 @@
 /* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _msgs = __webpack_require__(303);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = function () {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  return _react2.default.createElement("div", { id: "catflick-div" });
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var mapDispatch = function mapDispatch(dispatch) {
+	  return {
+	    sendMsg: function sendMsg(msg) {
+	      dispatch((0, _msgs.sendMsg)(msg));
+	    }
+	  };
+	};
+	var mapState = function mapState(state) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Component) {
+	  _inherits(CatFlick, _Component);
+	
+	  function CatFlick(props) {
+	    _classCallCheck(this, CatFlick);
+	
+	    var _this = _possibleConstructorReturn(this, (CatFlick.__proto__ || Object.getPrototypeOf(CatFlick)).call(this, props));
+	
+	    _this.state = {
+	      clickTrue: false,
+	      msg: '',
+	      sendClick: false
+	    };
+	    _this.handleClick = _this.handleClick.bind(_this);
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(CatFlick, [{
+	    key: 'handleClick',
+	    value: function handleClick(evt) {
+	      evt.preventDefault();
+	      this.setState({ clickTrue: !this.state.clickTrue });
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(evt) {
+	      evt.preventDefault();
+	      this.setState({ msg: evt.target.value });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit() {
+	      this.setState({ sendClick: true });
+	      var thingsSaid = this.state.msg;
+	      this.props.sendMsg(thingsSaid);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'col-12' },
+	        _react2.default.createElement('div', { id: 'catflick-div', onClick: this.handleClick }),
+	        _react2.default.createElement('br', null),
+	        this.state.clickTrue && _react2.default.createElement(
+	          'div',
+	          { id: 'msg-div' },
+	          'Hi.  You\'ve reached Alice. ',
+	          _react2.default.createElement('br', null),
+	          'This space is still under construction.  ',
+	          _react2.default.createElement('br', null),
+	          'Please leave a message. ',
+	          _react2.default.createElement('br', null),
+	          !this.state.sendClick ? _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement('textarea', { name: 'msg', value: this.state.msg, id: 'msg', onChange: this.handleChange }),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement('img', { id: 'mail-img', src: 'img/envelope.png', alt: 'send!', onClick: this.handleSubmit })
+	          ) : _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('br', null),
+	            'Message sent.  Thank you!'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return CatFlick;
+	}(_react.Component));
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.sendMsg = undefined;
+	
+	var _firebase = __webpack_require__(272);
+	
+	var sendMsg = exports.sendMsg = function sendMsg(msg) {
+	  return function (dispatch) {
+	    var date = new Date();
+	    (0, _firebase.database)().ref('msg').push({ date: date.toString(), msg: msg });
+	  };
 	};
 
 /***/ }

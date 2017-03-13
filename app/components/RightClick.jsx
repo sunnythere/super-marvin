@@ -17,7 +17,7 @@ export default (props) => {
   return(
    <div style={style}>
    <div className="context-menu-items" onClick={props.handleUndoCheckOut}>
-      <span className="icon-space" ><img src="img/trash.png"/>&nbsp; undo checkout</span>
+      <span className="icon-space" ><img src="img/reversearrow.png"/>&nbsp; undo checkout</span>
     </div>
     <div className="context-menu-items" onClick={props.handleDelete}>
       <span className="icon-space" ><img src="img/trash.png"/>&nbsp; delete this entry</span>

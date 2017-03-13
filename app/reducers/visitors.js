@@ -121,20 +121,6 @@ export const updateVisitorLog = (key, visitorInfo) =>
     ref.set(newVisitorObj)
 }
 
-// export const returnPrevKey = (key) =>
-//   (dispatch) =>
-//     const date = new Date()
-//     let ref = database()
-//       .ref(`visitors/${date.toDateString()}`)
-//       .child(`${key}`)
-
-//     const listener = ref
-//       .on('child_changed', (childSnapshot, prevChildKey) {
-//       return prevChildKey
-//     });
-
-//   return () => ref.off('value', listener)
-
 
 export const deleteOneVisitor = (key) =>
   (dispatch) => {

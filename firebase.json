@@ -4,6 +4,12 @@
   },
   "hosting": {
     "public": "public",
+    "ignore": [
+      "firebase.json",
+      "/app/**",
+      "/firebase/**",
+      "/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
