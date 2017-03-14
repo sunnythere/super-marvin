@@ -28780,7 +28780,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _redux = __webpack_require__(189);
@@ -28799,7 +28799,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)({ duration: true, collapsed: true }), _reduxThunk2.default));
+	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(
+	//createLogger({duration: true, collapsed:true}),
+	_reduxThunk2.default));
 	
 	exports.default = store;
 
@@ -33485,6 +33487,8 @@
 	
 	var _msgs = __webpack_require__(303);
 	
+	var _random = __webpack_require__(304);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33515,11 +33519,16 @@
 	    _this.state = {
 	      clickTrue: false,
 	      msg: '',
-	      sendClick: false
+	      sendClick: false,
+	      popUpX: '',
+	      popUpY: '',
+	      showContextMenu: false
 	    };
 	    _this.handleClick = _this.handleClick.bind(_this);
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleContextMenu = _this.handleContextMenu.bind(_this);
+	    _this.contextMenuClose = _this.contextMenuClose.bind(_this);
 	    return _this;
 	  }
 	
@@ -33543,12 +33552,81 @@
 	      this.props.sendMsg(thingsSaid);
 	    }
 	  }, {
+	    key: 'handleContextMenu',
+	    value: function handleContextMenu(evt) {
+	      evt.preventDefault();
+	
+	      this.setState({
+	        popUpX: evt.clientX,
+	        popUpY: evt.clientY,
+	        showContextMenu: true
+	      });
+	      window.addEventListener('click', this.contextMenuClose, false);
+	    }
+	  }, {
+	    key: 'contextMenuClose',
+	    value: function contextMenuClose(evt) {
+	      evt.preventDefault();
+	
+	      this.setState({
+	        showContextMenu: false,
+	        popUpX: '',
+	        popUpY: ''
+	      });
+	      window.removeEventListener('click', this.contextMenuClose, false);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	
+	      var style = {
+	        position: 'fixed',
+	        top: this.state.popUpY + 'px',
+	        left: this.state.popUpX + 'px',
+	        backgroundColor: 'white',
+	        border: '1px solid rgba(180,180,180,.8)',
+	        borderRadius: '5px',
+	        padding: '.3rem'
+	      };
+	
+	      var catSays = void 0;
+	      switch ((0, _random.randomInt)(6)) {
+	        case 1:
+	          catSays = "meow";
+	          break;
+	        case 2:
+	          catSays = "hey.";
+	          break;
+	        case 3:
+	          catSays = "purrrrr";
+	          break;
+	        case 4:
+	          catSays = "stealing is bad.";
+	          break;
+	        case 5:
+	          catSays = "I'm a css keyframe animation using a sprite.";
+	          break;
+	        case 6:
+	          catSays = "hello";
+	          break;
+	        case 7:
+	          catSays = "hey there.";
+	          break;
+	        case 8:
+	          catSays = "how YOU doin?";
+	          break;
+	        case 9:
+	          catSays = "meow";
+	          break;
+	        default:
+	          catSays = "mrrrreow";
+	          break;
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'col-12' },
-	        _react2.default.createElement('div', { id: 'catflick-div', onClick: this.handleClick }),
+	        _react2.default.createElement('div', { id: 'catflick-div', onClick: this.handleClick, onContextMenu: this.handleContextMenu }),
 	        _react2.default.createElement('br', null),
 	        this.state.clickTrue && _react2.default.createElement(
 	          'div',
@@ -33571,6 +33649,11 @@
 	            _react2.default.createElement('br', null),
 	            'Message sent.  Thank you!'
 	          )
+	        ),
+	        this.state.showContextMenu && _react2.default.createElement(
+	          'div',
+	          { style: style },
+	          catSays
 	        )
 	      );
 	    }
@@ -33597,6 +33680,22 @@
 	    var date = new Date();
 	    (0, _firebase.database)().ref('msg').push({ date: date.toString(), msg: msg });
 	  };
+	};
+
+/***/ },
+/* 304 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	// to get random integer from 0 and num
+	var randomInt = exports.randomInt = function randomInt(num) {
+	  //num = number of ints you want
+	  return Math.floor(Math.random() * (num + 1));
 	};
 
 /***/ }

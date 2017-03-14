@@ -3,6 +3,8 @@ import rootReducer from './reducers'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 
-const store = createStore(rootReducer, applyMiddleware(createLogger({duration: true, collapsed:true}), thunkMiddleware))
+const store = createStore(rootReducer, applyMiddleware(
+    //createLogger({duration: true, collapsed:true}),
+    thunkMiddleware))
 
 export default store

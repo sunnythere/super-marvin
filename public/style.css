@@ -376,7 +376,7 @@ input[type=submit] {
 }
 
 #catflick-div:hover {
-  animation: flickW 500ms 100ms steps(4);
+  animation: flickW 500ms 100ms steps(4) ;
 }
 
 #msg-div {
