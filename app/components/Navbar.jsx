@@ -35,14 +35,6 @@ export default connect(mapState, mapDispatch)(class Navbar extends Component {
   }
 
 
-  // handleScroll(evt) {
-  //   let scrollTop = evt.srcElement.body.scrollTop,
-  //     navTranslate = Math.min(0, scrollTop/3 - 60)
-  //     console.log('scrollTop ', scrollTop)
-  //     console.log('evt.srcElement.body ', evt.srcElement.body)
-  //  // this.setState({ transform: navTranslate })
-  // }
-
   handleChange(type) {
     return (
       (event) => {
@@ -103,7 +95,22 @@ render() {
   let scrollStyle = {
     backgroundColor: `rgba(40,40,40,${opacity})`
   }
+
   let path = this.props.path
+  let heading
+  switch (path) {
+    case '/history':
+      heading = 'Visitor History'
+      break
+    case '/visitor':
+      heading = 'Visitor Log'
+      break
+    case '/names':
+      heading = 'Name Bank'
+      break
+    default:
+      heading = 'Welcome'
+  }
 
   return (
 
@@ -112,12 +119,7 @@ render() {
 
       <div>
 
-        { path === '/history' ?
-          <h2>Visitor History</h2>
-          : <h2>Visitor Log</h2>
-        }
-
-
+        <h2>{heading}</h2>
 
         <div id="catface"  onClick={this.toggleMenu}><img src={this.state.menuImgSrc} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}/></div>
 

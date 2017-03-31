@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import { sendMsg } from '../reducers/msgs'
 import { randomInt } from '../util/random'
 
+// import env from '../img/envelope.png'
+
+
+
 const mapDispatch = (dispatch) => {
   return {
     sendMsg(msg) {dispatch(sendMsg(msg))}

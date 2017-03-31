@@ -6,15 +6,19 @@
     "public": "public",
     "ignore": [
       "firebase.json",
-      "/app/**",
-      "/firebase/**",
-      "/node_modules/**"
+      "**/.*",
+      "**/app/**",
+      "**/test/**",
+      "**/firebase/**",
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
   }
 }

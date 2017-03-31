@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from './Navbar'
 import Navbar2 from './Navbar2'
+import NavbarName from './NavbarName'
 
 
 export default class Scroll extends Component {
@@ -27,7 +28,6 @@ export default class Scroll extends Component {
 
   onWindowScroll(evt) {
     console.log('HEY HEY', evt)
-
   }
 
   handleScroll(evt) {
@@ -41,11 +41,6 @@ export default class Scroll extends Component {
         // 10: 0, 60: .9
       // above 60 - opaque-y
 
-    // let opacity
-    // if (y < 10) opacity = 0
-    // else if (y < 90) opacity = (y-10)/85
-    // else if (y >= 90) opacity = 8/8.5
-
     let opacity2
     if (y < 10) opacity2 = .25
     else if (y < 150) opacity2 = (y-10)/200 + .25
@@ -57,14 +52,20 @@ export default class Scroll extends Component {
 
 
   render() {
-    return(
+    return (
         <div>
-          <Navbar
-           opacity={this.state.opacity2}
-           path={this.props.path}/>
-           <Navbar2
-           opacity2={this.state.opacity2}
-           path={this.props.path}/>
+        { this.props.path === '/names' ?
+          <NavbarName
+            opacity2={this.state.opacity2} />
+        : <div>
+            <Navbar
+             opacity={this.state.opacity2}
+             path={this.props.path}/>
+            <Navbar2
+             opacity2={this.state.opacity2}
+             path={this.props.path}/>
+          </div>
+        }
         </div>
     )
   }

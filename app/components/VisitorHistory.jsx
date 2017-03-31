@@ -2,6 +2,7 @@ import React from 'react'
 import { getVisitors } from '../reducers/visitors'
 import { connect } from 'react-redux'
 import RightClick from './RightClick'
+import List from './List'
 
 
 const mapState = (state) => ({
@@ -68,15 +69,16 @@ console.log('VALUE ', value)
     let yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
 
-   //   yesterday.split(' ').slice(0,4).join(' ')
-   console.log('YESTERDAY', yesterday)
+    //   yesterday.split(' ').slice(0,4).join(' ')
+    console.log('YESTERDAY', yesterday)
     this.props.getVisitors(yesterday)
-    .then((visitorList) => {
-      this.setState({
-        theDate: yesterday,
-        visitorList: visitorList
+      .then((visitorList) => {
+        console.log('visitorList ', visitorList)
+        this.setState({
+          theDate: yesterday,
+          visitorList: visitorList
+        })
       })
-    })
 
     window.addEventListener('keydown', this.keysPressed, false)
     window.addEventListener('keyup', this.keysReleased, false)
@@ -181,10 +183,10 @@ console.log('VALUE ', value)
 
   render() {
 
-    console.log('LOCAL STATE' ,this.state)
+    console.log('PROPS CHILDREN ', this.props.children)
 
     let optionDates = []
-    for (let x = 0; x < 7; x++) {
+    for (let x = 0; x < 14; x++) {
       let dateObj = new Date()
       dateObj.setDate(dateObj.getDate() - x)
       // -0 today, -1 yesterday
@@ -198,10 +200,6 @@ console.log('VALUE ', value)
 
 
 
-
-
-
-    let costTotal
 
     return (
       <div className="div-container">
@@ -229,50 +227,12 @@ console.log('VALUE ', value)
         </form>
         </div>
 
-        <div id="visitorList-div">
+        <div>
 
-        { visitors ?
-              visitors.map(visitor => {
-
-              const group = visitor.partySize.length > 1 ? true : false
-              const groupArr = group ? visitor.partySize.split('-') : null
-              const groupLast = group && (groupArr[0] === groupArr[1]) ? true : false
-              costTotal += visitor.cost
-
-              return (
-                <div className="visitor-row" key={visitor.count}>
-                  <div className="div-inner">
-                    {visitor.count}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.checkInTime}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.checkOutTime}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.totalTime}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.minor ? 'minor' : ''}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.under3 ? 'under3' : ''}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.cost}
-                  </div>
-                  <div className="div-inner">
-                  {visitor.totalCost ? `${visitor.totalCost} (${visitor.partySize.slice(0,1)})` : ''}
-                  </div>
-
-                </div>)
-            })
-
-          : <p>nothing to see here</p>
-        }
+  <List visitors={visitors}/>
 
         </div>
+
 
         { this.state.showCtrlPanel &&
         <div className="ctrl" id="ctrlMenu">

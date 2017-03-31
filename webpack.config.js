@@ -1,28 +1,26 @@
 'use strict';
 
-var webpack = require('webpack');
+
+const webpack = require('webpack')
 
 module.exports = {
-  entry: './app/components/Main.jsx',
+  entry: './app',
   output: {
     path: __dirname,
     filename: './public/bundle.js'
   },
-  context: __dirname,
-  devtool: 'source-map',
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015']
-        }
-      }
-    ]
-  }
-};
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules)/,
+        use: [{
+          loader: 'babel-loader',
+          options: {  presets: ['react', 'es2015'] }
+        }]
+      }]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '*']
+  },
+}

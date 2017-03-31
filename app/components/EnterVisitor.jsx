@@ -13,11 +13,10 @@ class Enter extends Component {
 
   render() {
 
-    //console.log("PROPS in entervisitor ", this.props)
-
     return (
       <div id="div-main-visitor" className="parallax">
         <Scroll path={this.props.location.pathname}/>
+
         <div id="div-view">
 
               {this.props.children}

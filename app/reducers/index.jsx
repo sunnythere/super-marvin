@@ -4,7 +4,8 @@ const rootReducer = combineReducers({
   feline: require('./feline').default,
   user: require('./user').default,
   visitors: require('./visitors').default,
-  cost: require('./cost').default
+  cost: require('./cost').default,
+  names: require('./names').default
 });
 
 export default rootReducer
