@@ -904,7 +904,7 @@ input[type=submit] {
   width: 85%;
   box-sizing: border-box;
   margin: 80px auto auto auto;
-  padding: 1.5rem 1.5rem;
+  padding: none;
   background-color: rgba(250,250,250,0.6);
 }
 button.tag {
@@ -928,30 +928,38 @@ button.tag {
 }
 
 .div-space {
-  padding: 0.5rem;
+  padding: 1.75rem;
 }
 
-@media all and (min-width: 450px) {
-  .nameadd {
-    display: inline-block;
-    width: 200px;
-  }
-  .div-space {
-    padding: 1rem;
-  }
+.red {
+  background-color: red;
 }
-
-
-
-.tag0 {
-  background-color: #FF530D;
+.redorange {
+  background-color: #FA3707;
 }
-
-.tag1 {
+.orange {
   background-color: orange;
 }
-.tag2 {
-  background-color: #FFE31C;
+.yellow {
+  background-color: yellow;
+}
+.yellowgreen {
+  background-color: yellowgreen;
+}
+.peacock {
+  background-color: #0f89c5;
+}
+.pink {
+  background-color: #ff90ac;
+}
+.lightblue {
+  background-color: #82afff;
+}
+.white {
+  background-color: white;
+}
+.almostwhite {
+  background-color: rgba(252,252,252,0.8);
 }
 .tag3 {
   background-color: #479911;
@@ -1022,6 +1030,7 @@ select {
 
 ul {
   list-style-type: circle;
+  margin-top: .3rem;
 }
 
 .name-link {
@@ -1036,7 +1045,6 @@ ul {
 #selectConfirm {
   box-sizing: border-box;
   position: fixed;
-  height: 170px;
   width: 210px;
   top: 50%;
   left: 50%;
@@ -1071,4 +1079,18 @@ button.name-yes {
   margin: 4px auto;
   outline: none;
   transition: background .5s ease-in;
+}
+
+@media all and (min-width: 450px) {
+  .nameadd {
+    display: inline-block;
+    width: 200px;
+  }
+  .div-space {
+    padding: 1.5rem;
+  }
+  .submit-btn {
+    margin: 4px auto 4px 155px;
+
+  }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { getAllNames, getAllTags, addOneTag, addOneName } from '../reducers/names'
+
+import { getAllNames, getAllTags, addOneTag, addOneName, removeNameFromList } from '../reducers/names'
 import { connect } from 'react-redux'
 import RightClick from './RightClick'
 
@@ -9,7 +10,7 @@ const mapState = (state) => ({
   allTags: state.names.tags
 })
 
-const mapDispatch = { getAllNames, getAllTags, addOneTag, addOneName }
+const mapDispatch = { getAllNames, getAllTags, addOneTag, addOneName, removeNameFromList }
 
 
 export default connect(mapState,mapDispatch)(class NameBank extends Component {
@@ -22,9 +23,16 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       selectedTags: [],
       sort: 'alltags',
       keyArr: [],
+      showSelectConfirm: false,
       showCtrlPanel: false,
       newTag: '',
-      renderedList: []
+      renderedList: [],
+      headerDivClass: 'div-space almostwhite',
+      selectedName: '',
+      nameF: '',
+      dirty: false,
+      warnDuplicate: false,
+      duplicateMsg: ''
     }
 
     this.handleAddNameSubmit = this.handleAddNameSubmit.bind(this)
@@ -37,7 +45,9 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.groupSort = this.groupSort.bind(this)
     this.formatListSection = this.formatListSection.bind(this)
     this.renderList = this.renderList.bind(this)
-
+    this.selectName = this.selectName.bind(this)
+    this.chooseName = this.chooseName.bind(this)
+    this.showHint = this.showHint.bind(this)
 
     this.handleChange = (field) => (evt) => {
       this.setState({ [field]: evt.target.value })
@@ -46,19 +56,22 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.handleChangeDropDown = field => evt => {
       const { value } = evt.target
       this.setState({ [field]: value })
+
+      if (field === 'sort') {
+        this.props.allTags.forEach(tagObj => {
+          if (tagObj.tagName === value) {
+            this.setState({ headerDivClass: `div-space ${tagObj.color}` })
+          }
+        })
+      }
     }
+
   }
 
 
   componentDidMount() {
     window.addEventListener('keydown', this.keysPressed, false)
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.allNames !== this.props.allNames) {
-  //     this.renderList(nextProps.allNames)
-  //   }
-  // }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.keysPressed, false)
@@ -106,7 +119,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
   handleClickTag(evt) {
     evt.preventDefault()
     const tagKey = evt.target.id
-    console.log('click tag evt.target.id ', evt.target.id)
+
     const tagIndex = this.state.selectedTags.map(obj => obj.key).indexOf(tagKey)
 
     let updatedTagList
@@ -124,6 +137,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     this.setState({ selectedTags: updatedTagList })
   }
+
 
   sortAlpha(arrayOfObj) {
     return arrayOfObj.sort((a,b) => {
@@ -190,13 +204,12 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     let show
     let names = arrSection.map((nameGroup, idx) => {
-      console.log('NAMEGROUP: ', nameGroup)
       if (nameGroup.name || nameGroup.name === "") { show = nameGroup.name }
       else { //if array
         show = nameGroup.map(name => name.name).join(", ")
       }
 
-      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectNamePop}><li id={show}>{show}</li></a>)
+      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectName}><li id={show}>{show}</li></a>)
     })
 
     return (
@@ -239,6 +252,14 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     //}
   }
 
+  showHint(evt) {
+    evt.preventDefault()
+    this.setState({
+      dirty: true,
+      warnDuplicate: false
+    })
+  }
+
   handleAddNameSubmit(evt) {
     evt.preventDefault()
 
@@ -247,42 +268,121 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     let name = this.state.addName.trim() //trim any surrounding white space
     if (name[0] === "\"" && name[name.length-1] === "\"" || name[0] === "\'" && name[name.length-1] === "\'") {
       //trim quotes
-      name = [name.slice(1, name.length-1)]
+      name = [name.slice(1, name.length-1).trim()]
     } else if (!name.includes(",")) {
       name = [name]
     } else {
-      name = name.split(",")
+      name = name.split(",").map(name => name.trim())
     }
 
-    name.forEach((oneName, idx) => {
-      this.props.addOneName({
-        name: oneName,
-        tags: justTagNames,
-        theme: name.length > 1 ? `${name[0]}-${name.length}` : null
+    let duplicate = false
+    this.props.allNames.forEach(nameObj => {
+      if (nameObj.theme === `${name}-${name.length}`) {
+        this.setState({
+          duplicateMsg: 'these names are',
+          warnDuplicate: true
+        })
+        duplicate = true
+      } else if (!nameObj.theme && nameObj.name === name[0]) {
+        this.setState({
+          duplicateMsg: 'this name is',
+          warnDuplicate: true,
+        })
+        duplicate = true
+      }
+    })
+
+    if (!duplicate) {
+      name.forEach((oneName, idx) => {
+        this.props.addOneName({
+          name: oneName,
+          tags: justTagNames,
+          theme: name.length > 1 ? `${name}-${name.length}` : null
+        })
       })
+
+      this.setState({
+        dirty: false,
+        keyArr: [],
+        addName: '',
+        selectedTags: []
+      })
+    }
+  }
+
+  selectName(evt) {
+    evt.preventDefault()
+    const name = evt.target.id
+    let nameF
+
+    //search names to see if group (theme)
+    this.props.allNames.forEach(nameObj => {
+      if (nameObj.name === name) { //if single name
+        nameF = `name ${name}`
+      } else if (name === 'close') {
+        this.setState({
+          showSelectConfirm: false
+        })
+      } else {
+        const names = name.split(", ")
+        if (names.length === 2) {
+          nameF = `names ${names[0]} and ${names[1]}`
+        } else {
+          let names1 = names.slice(0, names.length-1).join(", ")
+          let names2 = names[names.length-1]
+          nameF = `names ${names1}, and ${names2}`
+        }
+      }
     })
 
     this.setState({
-      keyArr: [],
-      addName: '',
-      selectedTags: []
+      selectedName: evt.target.id,
+      nameF: nameF,
+      showSelectConfirm: !this.state.showSelectConfirm
     })
   }
 
+  chooseName(evt) {
+    evt.preventDefault()
+    this.setState({ showSelectConfirm: false })
+
+    let key
+    //search names to see if group (theme)
+    this.props.allNames.forEach(nameObj => {
+      if (nameObj.name === this.state.selectedName) { //if single name
+        key = nameObj.key
+        this.props.removeNameFromList(key)
+      } else {
+        this.state.selectedName.split(",").forEach(name => {
+          this.props.allNames.forEach(nameObj => {
+            if (nameObj.name === name.trim()) {
+              key = nameObj.key
+              this.props.removeNameFromList(key)
+            }
+          })
+        })
+      }
+    })
+
+    this.setState({
+      selectedName: '',
+      nameF: ''
+    })
+  }
 
 // --------------- RENDER ---------------
   render() {
 
-    console.log('state', this.state)
-    console.log('props', this.props)
+    // console.log('state', this.state)
+    // console.log('props', this.props)
     return (
       <div className="container">
 
         {// --------------- sort dropdown ---------------
         }
-        <div className="div-space">
+        <div className={this.state.headerDivClass}>
           <form>
-          <label>sort:
+          <label>➣ &nbsp;
           <select onChange={this.handleChangeDropDown('sort')} defaultValue="alltags">
 
                 <optgroup label="group size, by tag">
@@ -307,26 +407,35 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
         <div className="div-space">
 
-          {
-            this.props.allNames ?
 
-            this.renderList(this.props.allNames)
-             .map((nameArr, idx) => {
-                return (this.formatListSection(nameArr))
-              })
+            {
+              this.props.allNames ?
 
-            : null
-          }
+              this.renderList(this.props.allNames)
+               .map((nameArr, idx) => {
+                  return (this.formatListSection(nameArr))
+                })
+
+              : null
+            }
+
 
         </div>
 
         {// step1: ------------- add name ---------------
         }
-        <div className="div-space">
+        <div className="div-space almostwhite">
             <form onSubmit={this.handleAddNameSubmit}>
               <label>Add a Name: &nbsp;
                 <br/>
-                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')}/>
+                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint}/>
+                { this.state.dirty && !this.state.warnDuplicate ?
+                <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.</div>
+                : null
+                }
+                { this.state.warnDuplicate &&
+                  <div className="small">Hey, {this.state.duplicateMsg} already on the list!</div>
+                }
               </label>
 
               {
@@ -345,6 +454,21 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
             </form>
         </div>
+
+        { // --------------- nameselect panel ---------------
+          this.state.showSelectConfirm &&
+
+          <div className="selectConfirm" id="selectConfirm">
+
+            Would you like to use the {this.state.nameF}?
+            <br/>
+            <span className="small">This will take the name(s) off the list.</span>
+            <br />
+            <button className="name-yes" onClick={this.chooseName}>Yes, I'm using it! </button>
+            <button className="name-no" onClick={this.selectName} id="close">No, not today</button>
+
+          </div>
+        }
 
         { // --------------- ctrl panel ---------------
           this.state.showCtrlPanel &&

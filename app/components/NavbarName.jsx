@@ -88,7 +88,7 @@ export default connect(mapState, mapDispatch)(class NavbarName extends Component
     this.setState({ menuImgSrc: 'img/catface-2-white.png' })
   }
   handleMouseOut(evt) {
-    this.setState({ menuImgSrc: 'img/catface-2-white.png' })
+    this.setState({ menuImgSrc: 'img/catface-2.png' })
   }
 
 render() {
@@ -112,30 +112,31 @@ render() {
         <div id="catface"  onClick={this.toggleMenu}><img src={this.state.menuImgSrc} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}/></div>
 
           { this.state.menuShow &&
-            <div className="menu">
-              {
-                !this.props.currentUser.email ?
-                <p onClick={this.toggleLogin}>Login</p>
+            <div className="menu">meow</div>
+            // <div className="menu">
+            //   {
+            //     !this.props.currentUser.email ?
+            //     <p onClick={this.toggleLogin}>Login</p>
 
-               : <div>
+            //    : <div>
 
-                  <p onClick={this.handleSubmitLogout}>Logout</p>
-                 </div>
+            //       <p onClick={this.handleSubmitLogout}>Logout</p>
+            //      </div>
 
               }
 
 
 
-              { this.state.loginShow &&
-                <div className="div-inner-container">
-                  <form onSubmit={this.handleSubmit}>
-                    <input type="email" placeholder="email" value={this.state.email} onChange={this.handleChange('email')}/>
-                    <input type="password" placeholder="password" value={this.state.pswd} onChange={this.handleChange('pswd')}/>
-                    <input type="submit" value="submit" />
-                  </form>
-                </div>
-              }
-            </div>
+               { //this.state.loginShow &&
+              //   <div className="div-inner-container">
+              //     <form onSubmit={this.handleSubmit}>
+              //       <input type="email" placeholder="email" value={this.state.email} onChange={this.handleChange('email')}/>
+              //       <input type="password" placeholder="password" value={this.state.pswd} onChange={this.handleChange('pswd')}/>
+              //       <input type="submit" value="submit" />
+              //     </form>
+              //   </div>
+              //}
+            //</div>
           }
       </div>
     </div>
