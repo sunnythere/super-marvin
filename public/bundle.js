@@ -34763,6 +34763,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   }
 });
 
+(function (i, s, o, g, r, a, m) {
+  i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+    (i[r].q = i[r].q || []).push(arguments);
+  }, i[r].l = 1 * new Date();a = s.createElement(o), m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m);
+})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-96579350-1', 'auto');
+ga('send', 'pageview');
+
 var onEnterNames = function onEnterNames() {
   _store2.default.dispatch((0, _names.getAllNames)());
   _store2.default.dispatch((0, _names.getAllTags)());

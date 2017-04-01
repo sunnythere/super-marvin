@@ -545,7 +545,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
   min-width: 760px;
 }
 .parallax {
-  background-image: url('img/IMG_2979_.jpg');
+  background-image: url('img/IMG_0753.png');
   height: 100%;
   width: 100vw;
 
@@ -731,7 +731,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
 input {
   border: none;
   padding: 2px;
-  margin: 2px;
+  margin: 2px 0px;
   background-color: rgba(0,0,0,0);
   font-family: 'Lato', sans-serif;
   font-size: 1.1rem;
@@ -922,7 +922,7 @@ button.tag {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1.1rem;*/
   border: 1px solid lightgrey;
-  margin: none;
+  margin: 2px 0px;
   background-color: white;
   display: block;
   width: 100%;
