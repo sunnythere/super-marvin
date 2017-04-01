@@ -1,11 +1,14 @@
 {
-  "rules": {
-      "msg" : { ".read": false,
-                ".write": true },
-      "names" : { ".read": true,
-                ".write": true },
-      "nametags" : { ".read": true,
-                ".write": true },
+"rules": {
+    "msg" : { ".read": false,
+              ".write": true },
+    "names" : { ".read": true,
+              ".write": true },
+    "nametags" : { ".read": true,
+              ".write": true },
+    "oldnames" : { ".read": true,
+              ".write": true },
     ".read": "auth != null",
     ".write": "auth != null"
-  }}
+  }
+}

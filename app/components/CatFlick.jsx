@@ -114,7 +114,7 @@ export default connect(mapState, mapDispatch)(class CatFlick extends Component {
       catSays = "how YOU doin?"
       break;
     case 9:
-      catSays = "meow"
+      catSays = "right click."
       break;
     default:
       catSays = "mrrrreow"
@@ -130,19 +130,19 @@ export default connect(mapState, mapDispatch)(class CatFlick extends Component {
 
         <br/>
         { this.state.clickTrue &&
-        <div id="msg-div">
+        <div id="msg-div"><p className="Lato">
           Hi.  You've reached Alice. <br/>
           This space is still under construction.  <br/>
-          Please leave a message. <br />
+          Please leave a message. <br /></p>
 
 
           { !this.state.sendClick ?
               <form>
-                <textarea name="msg" value={this.state.msg} id="msg" onChange={this.handleChange}/>
+                <textarea name="msg" value={this.state.msg} id="msg" onChange={this.handleChange} className="Lato"/>
                 <br/>
                 <img id="mail-img" src="img/envelope.png" alt="send!" onClick={this.handleSubmit} />
               </form>
-            : <div><br/>Message sent.  Thank you!</div>
+            : <div><br/><p className="Lato">Message sent.  Thank you!</p></div>
           }
         </div>
         }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="52px" viewBox="0 0 54 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>addbtn2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M50.9150478,32.4372026 C50.1363914,41.4487158 39.7566956,48.5837122 27.0665386,48.5837122 C14.3668122,48.5837122 3.98103284,41.4379509 3.2162843,32.416813 L3.11991311,32.4538065 L3.17208312,31.5032323 C3.17145625,31.4517635 3.17114216,31.4002409 3.17114216,31.3486653 C3.17114216,30.8303965 3.20285793,30.3174705 3.26496595,29.8108421 L4.73194055,3.081538 L17.3201299,15.6077512 C20.2965415,14.6475441 23.5950919,14.1136185 27.0665386,14.1136185 C30.5241466,14.1136185 33.8102341,14.6432957 36.7773362,15.5962881 L49.3518537,3.0836795 L50.7885923,29.2620624 C50.9030377,29.9460642 50.9619351,30.6424038 50.9619351,31.3486653 C50.9619351,31.5863383 50.9552651,31.8228877 50.9420528,32.0582213 L50.9638811,32.455948 L50.9150478,32.4372026 Z" id="path-1"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.195425725 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <text id="text-4" font-family="Galada-Regular, Galada" font-size="20" font-weight="normal" letter-spacing="0.421052635" fill-opacity="0.892549819" fill="#FBFBFB">
+            <tspan x="8.5" y="37">Add</tspan>
+        </text>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.75" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.187415082 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="addbtn2">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Combined-Shape">
+                <use fill="#0AAAB4" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Add" mask="url(#mask-2)" fill-opacity="0.892549819" fill="#FBFBFB">
+                <use filter="url(#filter-5)" xlink:href="#text-4"></use>
+                <use xlink:href="#text-4"></use>
+            </g>
+        </g>
+    </g>
+</svg>

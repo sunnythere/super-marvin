@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { getAllNames, getAllTags, addOneTag, addOneName, removeNameFromList } from '../reducers/names'
 import { connect } from 'react-redux'
 import RightClick from './RightClick'
+import { ChromePicker } from 'react-color'
 
 
 const mapState = (state) => ({
@@ -27,6 +28,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       showSelectConfirm: false,
       showCtrlPanel: false,
       newTag: '',
+      sampleTagColor: 'grey',
+      showColorPicker: false,
       renderedList: [],
       headerDivClass: 'div-space almostwhite',
       selectedName: '',
@@ -35,7 +38,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       nameF: '',
       dirty: false,
       warnDuplicate: false,
-      duplicateMsg: ''
+      duplicateMsg: '',
     }
 
     this.handleAddNameSubmit = this.handleAddNameSubmit.bind(this)
@@ -51,6 +54,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.selectName = this.selectName.bind(this)
     this.chooseName = this.chooseName.bind(this)
     this.showHint = this.showHint.bind(this)
+    this.clickSampleTag = this.clickSampleTag.bind(this)
+    this.touchEnd = this.touchEnd.bind(this)
 
     this.handleChange = (field) => (evt) => {
       this.setState({ [field]: evt.target.value })
@@ -72,6 +77,10 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.handleChangeBool = field => evt => {
       evt.preventDefault()
       this.setState({ [field]: !this.state[field] })
+    }
+
+    this.handleChangeComplete = (color, event) => {
+      this.setState({ sampleTagColor: color.hex })
     }
 
   }
@@ -97,9 +106,12 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     }
   }
 
-  handleCtrlSubmit(evt) {
+  handleCtrlSubmit(evt) { //add new tag
     evt.preventDefault()
-    this.props.addOneTag({ tagName: this.state.newTag})
+    this.props.addOneTag({
+      tagName: this.state.newTag,
+      color: this.state.sampleTagColor ? this.state.sampleTagColor : null
+    })
     this.setState({
       newTag: '',
       showCtrlPanel: false,
@@ -108,8 +120,13 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     window.removeEventListener('click', this.ctrlPanelClose, false)
   }
 
+  clickSampleTag(evt) {
+    evt.preventDefault()
+    this.setState({ showColorPicker: !this.state.showColorPicker })
+  }
+
   ctrlPanelClose(evt) {
-    if (!evt.target.id.includes('ctrl')) {
+    if (evt.target.id === 'ctrlClose') {
       this.setState({
         showCtrlPanel: false,
         keyArr: []
@@ -120,7 +137,9 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
   renderTags(tagsArr) {
     return tagsArr.map((tagObj, idx) => {
-      return (<button key={`${tagObj.key}-${idx}`} className={`tag ${tagObj.color? tagObj.color : 'tag99'}`} id={tagObj.key} onClick={this.handleClickTag}>{tagObj.tagName}</button> )
+      let classes = `tag ${tagObj.color && tagObj.color[0] !== '#' ? tagObj.color : 'tag99'}`
+      let style = { backgroundColor: tagObj.color && tagObj.color[0] === '#' ? tagObj.color : null }
+      return (<button key={`${tagObj.key}-${idx}`} className={classes} style={style} id={tagObj.key} onClick={this.handleClickTag}>{tagObj.tagName}</button> )
     })
   }
 
@@ -278,55 +297,68 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     })
   }
 
+  touchEnd(evt) {
+    console.log('altKey' , evt.altKey)
+    console.log('changedTouches' , evt.changedTouches)
+    console.log('ctrlKey' , evt.ctrlKey)
+    console.log('getModifierState(69)' , evt.getModifierState(69))
+    console.log('metaKey' , evt.metaKey)
+    console.log('shiftKey' , evt.shiftKey)
+    console.log('targetTouches' , evt.targetTouches)
+    console.log('touches' , evt.touches)
+  }
+
   handleAddNameSubmit(evt) {
     evt.preventDefault()
 
-    const justTagNames = this.state.selectedTags.map(tagObj => tagObj.tagName)
+    const justTagNames = this.state.selectedTags.length ? this.state.selectedTags.map(tagObj => tagObj.tagName) : null
     let description = this.state.description.trim()
-    let name = this.state.addName.trim() //trim any surrounding white space
-    if (name[0] === "\"" && name[name.length-1] === "\"" || name[0] === "\'" && name[name.length-1] === "\'") {
-      //trim quotes
-      name = [name.slice(1, name.length-1).trim()]
-    } else if (!name.includes(",")) {
-      name = [name]
-    } else {
-      name = name.split(",").map(name => name.trim())
-    }
+    let name = this.state.addName.trim() ? this.state.addName.trim() : null //trim any surrounding white space
+    if (name) {
+        if (name[0] === "\"" && name[name.length-1] === "\"" || name[0] === "\'" && name[name.length-1] === "\'") {
+          //trim quotes
+          name = [name.slice(1, name.length-1).trim()]
+        } else if (!name.includes(",")) {
+          name = [name]
+        } else {
+          name = name.split(",").map(name => name.trim())
+        }
 
-    let duplicate = false
-    this.props.allNames.forEach(nameObj => {
-      if (nameObj.theme === `${name}-${name.length}`) {
-        this.setState({
-          duplicateMsg: 'these names are',
-          warnDuplicate: true
+        let duplicate = false
+        this.props.allNames.forEach(nameObj => {
+          if (nameObj.theme === `${name}-${name.length}`) {
+            this.setState({
+              duplicateMsg: 'these names are',
+              warnDuplicate: true
+            })
+            duplicate = true
+          } else if (!nameObj.theme && nameObj.name === name[0]) {
+            this.setState({
+              duplicateMsg: 'this name is',
+              warnDuplicate: true,
+            })
+            duplicate = true
+          }
         })
-        duplicate = true
-      } else if (!nameObj.theme && nameObj.name === name[0]) {
-        this.setState({
-          duplicateMsg: 'this name is',
-          warnDuplicate: true,
-        })
-        duplicate = true
-      }
-    })
 
-    if (!duplicate) {
-      name.forEach((oneName, idx) => {
-        this.props.addOneName({
-          name: oneName,
-          description: description ? description : null,
-          tags: justTagNames,
-          theme: name.length > 1 ? `${name}-${name.length}` : null
-        })
-      })
+        if (!duplicate) {
+          name.forEach((oneName, idx) => {
+            this.props.addOneName({
+              name: oneName,
+              description: description ? description : null,
+              tags: justTagNames,
+              theme: name.length > 1 ? `${name}-${name.length}` : null
+            })
+          })
 
-      this.setState({
-        dirty: false,
-        keyArr: [],
-        addName: '',
-        description: '',
-        selectedTags: []
-      })
+          this.setState({
+            dirty: false,
+            keyArr: [],
+            addName: '',
+            description: '',
+            selectedTags: []
+          })
+        }
     }
   }
 
@@ -403,6 +435,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     })
   }
 
+
+
 // --------------- RENDER ---------------
   render() {
 
@@ -461,7 +495,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
             <form onSubmit={this.handleAddNameSubmit}>
               <label>Add a Name: &nbsp;
                 <br/>
-                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint}/>
+                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint} onTouchStart={this.touchEnd}/>
               </label>
                 { this.state.dirty && !this.state.warnDuplicate ?
                 <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>
@@ -485,8 +519,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 : null
               }
 
-                <br />
-                <input className="submit-btn" type="submit" defaultValue="Add"/>
+
+                <input id="submit-btn-cat" type="submit" defaultValue=""/>
                 <br />
 
               {
@@ -500,14 +534,16 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
           this.state.showSelectConfirm &&
 
           <div className="selectConfirm" id="selectConfirm">
-            {this.state.selectedDescrip ?
-              <p>{this.state.selectedDescrip}</p>
-              : null}
-            <p className="block">Would you like to use the {this.state.nameF}? &nbsp;
-            <span className="small">This will take the name(s) off the list.</span>
-            </p>
+            <div id="selectConfirm-text">
+              {this.state.selectedDescrip ?
+                <p className="block selectConfirm">{this.state.selectedDescrip}</p>
+                : null}
+              <p className="block selectConfirm">Would you like to use the {this.state.nameF}? &nbsp;
+              <span className="small">This will take the {this.state.nameF.split(' ')[0]} off the list.</span>
+              </p>
+            </div>
 
-            <button className="name-yes" onClick={this.chooseName}>Yes, I'm using it! </button>
+            <button className="name-yes" onClick={this.chooseName}>Yes, I'm using {this.state.nameF.split(' ')[0] ==='name' ? 'it' : 'them'}! </button>
             <button className="name-no" onClick={this.selectName} id="close">No, not today</button>
 
           </div>
@@ -520,9 +556,23 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
             <form onSubmit={this.handleCtrlSubmit}>
               <label>Add a New Tag: <br />
 
-              <input type="text" name="newTag" id="ctrl1" value={this.state.newTag} className="tag-ctrl" onChange={this.handleChange('newTag')} />
-              <input type="submit" defaultValue="add" id="ctrlbtn"/>
+                <input type="text" name="newTag" id="ctrl1" value={this.state.newTag} className="tag-ctrl" onChange={this.handleChange('newTag')} />
               </label>
+
+              <label>Click to Pick a Color: </label> <br/>
+
+                <button className="tag" style={{ backgroundColor: this.state.sampleTagColor }} id="ctrl2" onClick={this.clickSampleTag}>{this.state.newTag}</button>
+                { this.state.showColorPicker &&
+                  <ChromePicker
+                    color={this.state.sampleTagColor}
+                    onChangeComplete={this.handleChangeComplete}
+                  />
+                }
+                <br />
+                <br />
+                <input type="button" defaultValue="cancel" className="ctrlbtn" id="ctrlClose" />
+                <input type="submit" defaultValue="add" className="ctrlbtn"/>
+
             </form>
           </div>
         }

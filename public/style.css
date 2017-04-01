@@ -473,7 +473,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Raleway', sans-serif;
   height: 100%;
   min-height: 100vh;
   font-size: 1.1rem;
@@ -485,28 +485,28 @@ p {
 }
 
 
-h1 {  font-size: 3.6rem;   font-family: 'Lora', serif;}
+h1 {  font-size: 3.6rem;   font-family: 'Raleway', sans-serif;}
 h2 {
   display: inline-block;
-  font-size: 2.4rem;
-  font-family: 'Lora', serif;
-  margin: .5rem;
+  font-size: 2.7rem;
+  font-family: 'Galada', sans-serif;
+  margin: .5rem 0rem;
   color: rgba(252,252,252,0.8);
 }
-h3 {  font-size: 2.0rem;   font-family: 'Lora', serif;}
+h3 {  font-size: 2.0rem;   font-family: 'Raleway', sans-serif;}
 h4 {
   display: inline-block;
   font-size: 1.8rem;
-  font-family: 'Lora', sans-serif;
+  font-family: 'Raleway', sans-serif;
   margin: .3rem;
 }
 h5 {
   display: inline-block;
   font-size: 1.6rem;
-  font-family: 'Lora', serif;
+  font-family: 'Raleway', sans-serif;
   margin: .3rem;
 }
-h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
+h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
 
 
 /* grid */
@@ -546,8 +546,9 @@ h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
 }
 .parallax {
   background-image: url('img/IMG_0753.png');
+  min-height: 100vh;
   height: 100%;
-  width: 100vw;
+  /*width: 100vw;*/
 
   background-attachment: fixed;
   background-position: center;
@@ -573,14 +574,14 @@ h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
   min-width: 750px;
   box-sizing: border-box;
 }
-#navbar-name {
+#navbar-name {  /* name bank*/
   position: fixed;
   top: 0px;
   width: 100%;
   height: 60px;
   background-color: transparent;
   color: #000000;
-  padding: 7px 16px;
+  padding: 7px 10px;
   z-index: 2;
   box-sizing: border-box;
 }
@@ -733,7 +734,7 @@ input {
   padding: 2px;
   margin: 2px 0px;
   background-color: rgba(0,0,0,0);
-  font-family: 'Lato', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 1.1rem;
 }
 label {
@@ -807,13 +808,17 @@ label {
   border: 1px solid darkgrey;
   border-radius: 3px;
 }
-#ctrlbtn {
-  background-color: darkgrey;
+.ctrlbtn {
+  background-color: #62b431;
   border: none;
   border-radius: 3px;
   width: auto;
-  padding: 5px 12px 7px 12px;
+  padding: 5px 10px 6px 10px;
+  margin: 3px;
   float: right;
+}
+#ctrlClose {
+  background-color: darkgrey;
 }
 
 input[type=submit] {
@@ -907,20 +912,10 @@ input[type=submit] {
   padding: none;
   background-color: rgba(250,250,250,0.6);
 }
-button.tag {
-  font-size: .9rem ;
-  padding: 5px 11px 6px;
-  margin: 4px;
-  border: none;
-  border-radius: 16px;
-}
+
 /* input field */
 .nameadd {
-/*
-  padding: 2px;
-  background-color: rgba(0,0,0,0);
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 1.1rem;*/
+
   border: 1px solid lightgrey;
   margin: 2px 0px;
   background-color: white;
@@ -933,51 +928,38 @@ button.tag {
   padding: 1.75rem;
 }
 
+button.tag {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1rem ;
+  padding: 5px 11px 6px;
+  margin: 4px;
+  border: none;
+  border-radius: 16px;
+  color: #fafae6;
+}
 .red {
   background-color: red;
 }
-.redorange {
-  background-color: #FA3707;
-}
-.orange {
-  background-color: orange;
-}
-.yellow {
-  background-color: yellow;
-}
-.yellowgreen {
-  background-color: yellowgreen;
+.frenchpuce {
+  background-color: #591207;
 }
 .green {
   background-color: #479911;
 }
-.peacock {
-  background-color: #0f89c5;
+.prussianblue {
+  background-color: #073959;
 }
-.pink {
-  background-color: #ff90ac;
-}
-.lightblue {
-  background-color: #82afff;
+.boysenberry {
+  background-color: #7F2C5E;
 }
 .white {
   background-color: white;
 }
+.romansilver {
+  background-color: #808A9F;
+}
 .almostwhite {
   background-color: rgba(252,252,252,0.8);
-}
-
-.tag4 {
-  background-color: #3CAFFF;
-}
-.tag5 {
-  background-color: #d85894;
-}
-.tag6 {
-  background-color: #FF95FF;
-}
-.tag7 {
-  background-color: #7995FF;
 }
 .tag99 {
   background-color: silver;
@@ -990,21 +972,29 @@ button.tag {
   border-radius: 3px;
 }
 
-.submit-btn {
-  background-color: turquoise;
+/*.submit-btn {
+  background-color: #2bd696;
   border: none;
   border-radius: 6px;
   width: auto;
-  padding: 6px 11px 8px 12px;
-  display: block;
-  margin: 4px auto;
-  outline: none;
-  transition: background .5s ease-in;
+  padding: 7px 12px ;
+  transition: background .3s ease-in;
 }
-.submit-btn:hover {
+.submit-btn:active {
   background-color: teal;
+}*/
+#submit-btn-cat {
+  background-image: url('img/addbtn.svg');
+  background-color: transparent; /* test*/
+  display: block;
+  margin: 8px auto 4px auto;
+  width: 54px;
+  height: 52px;
+  outline: none;
 }
-
+.submit-btn-cat:active {
+  background-image: url('img/addbtn2.svg');
+}
 hr {
   border-top: 1px dashed darkgrey;
 }
@@ -1014,16 +1004,16 @@ select {
   border: 1px solid lightgrey;
   padding: 2px;
 }
-
+/* add tag */
 #ctrlMenu2 {
   box-sizing: border-box;
   position: fixed;
-  height: 120px;
-  width: 200px;
+  height: 160px;
+  width: 230px;
   top: 50%;
   left: 50%;
-  margin-top: -60px;
-  margin-left: -100px;
+  margin-top: -120px;
+  margin-left: -115px;
   z-index: 5;
   border-radius: 5px;
   padding: 0.8rem 1rem;
@@ -1059,9 +1049,15 @@ ul {
   margin-left: -105px;
   z-index: 5;
   border-radius: 5px;
-  padding: 0.8rem 1rem;
+  padding: 0.4rem 1rem 0.8rem 1rem;
   background-color: white;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+}
+#selectConfirm-text {
+  padding-left: 0.15rem;
+}
+p.selectConfirm {
+  font-size: 1.2rem;
 }
 
 button.name-no {
@@ -1074,6 +1070,7 @@ button.name-no {
   margin: 4px auto;
   outline: none;
   transition: background .5s ease-in;
+  color: rgba(252,252,252,1);
 }
 
 button.name-yes {
@@ -1086,10 +1083,12 @@ button.name-yes {
   margin: 4px auto;
   outline: none;
   transition: background .5s ease-in;
+  color: rgba(252,252,252,1);
 }
 
 .name {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
 }
 
 .example-enter {
@@ -1120,6 +1119,13 @@ button.name-yes {
   }
   .submit-btn {
     margin: 4px auto 4px 255px;
-
   }
+  #navbar-name {  /* name bank*/
+    padding: 7px 16px;
+  }
+}
+
+
+.Lato {
+  font-family: "Lato", sans-serif;
 }
