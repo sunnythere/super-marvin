@@ -30,6 +30,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       renderedList: [],
       headerDivClass: 'div-space almostwhite',
       selectedName: '',
+      selectedKey: '',
       selectedDescrip: '',
       nameF: '',
       dirty: false,
@@ -209,14 +210,24 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     else if (arrSection[0].length === 4) { listTitle = "Quartets" }
     else { listTitle = `Groups of ${arrSection[0].length + 1}` }
 
-    let show
+    let show, keyValue
     let names = arrSection.map((nameGroup, idx) => {
-      if (nameGroup.name || nameGroup.name === "") { show = nameGroup.name }
-      else { //if array
-        show = nameGroup.map(name => name.name).join(", ")
+      if (nameGroup.name || nameGroup.name === "") {
+        show = nameGroup.name
+        keyValue = nameGroup.key
+      } else { //if array
+        show = []
+        keyValue = []
+        nameGroup.forEach(name => {
+          show.push(name.name)
+          keyValue.push(name.key)
+        })
+        show = show.join(", ")
+        keyValue = keyValue.join(", ")
+
       }
 
-      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectName}><li className="name" id={show}>{show}</li></a>)
+      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectName}><li className="name" id={keyValue}>{show}</li></a>)
     })
 
     return (
@@ -313,6 +324,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
         dirty: false,
         keyArr: [],
         addName: '',
+        description: '',
         selectedTags: []
       })
     }
@@ -320,38 +332,42 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
   selectName(evt) {
     evt.preventDefault()
-    const name = evt.target.id
+    const keyValue = evt.target.id
+    const name = evt.target.innerHTML
     let nameF, selectedDescrip
 
-    //search names to see if group (theme)
+    //search to see if group (theme)
     this.props.allNames.forEach(nameObj => {
-      if (nameObj.name === name) { //if single name
-        nameF = `name ${name}`
+      if (nameObj.key === keyValue) { //if single name
+        nameF = `name ${nameObj.name}`
         selectedDescrip = nameObj.description
-      } else if (name === 'close') {
+      } else if (keyValue === 'close') { //if hitting close button
         this.setState({
           showSelectConfirm: false
         })
-      } else {
+       } else {
+        const keys = keyValue.split(", ")
         const names = name.split(", ")
-        if (nameObj.name === names[0].trim()) {
+        if (nameObj.key === keys[0].trim()) { //if group
           selectedDescrip = nameObj.description
+          //description same for group
         }
 
-        if (names.length === 2) {
+        if (keys.length === 2) {
           nameF = `names ${names[0]} and ${names[1]}`
         } else {
           let names1 = names.slice(0, names.length-1).join(", ")
           let names2 = names[names.length-1]
           nameF = `names ${names1}, and ${names2}`
         }
-      }
+       }
 
     })
 
     this.setState({
-      selectedName: evt.target.id,
+      selectedName: evt.target.innerHTML,
       selectedDescrip: selectedDescrip,
+      selectedKey: evt.target.id,
       nameF: nameF,
       showSelectConfirm: !this.state.showSelectConfirm
     })
@@ -364,15 +380,13 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     let key
     //search names to see if group (theme)
     this.props.allNames.forEach(nameObj => {
-      if (nameObj.name === this.state.selectedName) { //if single name
-        key = nameObj.key
-        this.props.removeNameFromList(key)
+      if (nameObj.key === this.state.selectedKey) { //if single name
+        this.props.removeNameFromList(this.state.selectedKey)
       } else {
-        this.state.selectedName.split(",").forEach(name => {
+        this.state.selectedKey.split(",").forEach(key => {
           this.props.allNames.forEach(nameObj => {
-            if (nameObj.name === name.trim()) {
-              key = nameObj.key
-              this.props.removeNameFromList(key)
+            if (nameObj.key === key.trim()) {
+              this.props.removeNameFromList(nameObj.key)
             }
           })
         })
@@ -381,6 +395,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     this.setState({
       selectedName: '',
+      selectedKey: '',
+      selectedDescrip: '',
       nameF: ''
     })
   }
@@ -444,6 +460,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
               <label>Add a Name: &nbsp;
                 <br/>
                 <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint}/>
+              </label>
                 { this.state.dirty && !this.state.warnDuplicate ?
                 <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>
                   <textarea
@@ -459,8 +476,6 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 { this.state.warnDuplicate &&
                   <div className="small">Hey, {this.state.duplicateMsg} already on the list!</div>
                 }
-
-              </label>
 
               {
                 this.state.selectedTags ?

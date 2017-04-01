@@ -15341,6 +15341,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       renderedList: [],
       headerDivClass: 'div-space almostwhite',
       selectedName: '',
+      selectedKey: '',
       selectedDescrip: '',
       nameF: '',
       dirty: false,
@@ -15562,15 +15563,22 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
         listTitle = 'Groups of ' + (arrSection[0].length + 1);
       }
 
-      var show = void 0;
+      var show = void 0,
+          keyValue = void 0;
       var names = arrSection.map(function (nameGroup, idx) {
         if (nameGroup.name || nameGroup.name === "") {
           show = nameGroup.name;
+          keyValue = nameGroup.key;
         } else {
           //if array
-          show = nameGroup.map(function (name) {
-            return name.name;
-          }).join(", ");
+          show = [];
+          keyValue = [];
+          nameGroup.forEach(function (name) {
+            show.push(name.name);
+            keyValue.push(name.key);
+          });
+          show = show.join(", ");
+          keyValue = keyValue.join(", ");
         }
 
         return _react2.default.createElement(
@@ -15578,7 +15586,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
           { className: 'name-link', key: nameGroup + '-' + idx, onClick: _this3.selectName },
           _react2.default.createElement(
             'li',
-            { className: 'name', id: show },
+            { className: 'name', id: keyValue },
             show
           )
         );
@@ -15698,6 +15706,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
           dirty: false,
           keyArr: [],
           addName: '',
+          description: '',
           selectedTags: []
         });
       }
@@ -15708,27 +15717,32 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       var _this6 = this;
 
       evt.preventDefault();
-      var name = evt.target.id;
+      var keyValue = evt.target.id;
+      var name = evt.target.innerHTML;
       var nameF = void 0,
           selectedDescrip = void 0;
 
-      //search names to see if group (theme)
+      //search to see if group (theme)
       this.props.allNames.forEach(function (nameObj) {
-        if (nameObj.name === name) {
+        if (nameObj.key === keyValue) {
           //if single name
-          nameF = 'name ' + name;
+          nameF = 'name ' + nameObj.name;
           selectedDescrip = nameObj.description;
-        } else if (name === 'close') {
+        } else if (keyValue === 'close') {
+          //if hitting close button
           _this6.setState({
             showSelectConfirm: false
           });
         } else {
+          var keys = keyValue.split(", ");
           var names = name.split(", ");
-          if (nameObj.name === names[0].trim()) {
+          if (nameObj.key === keys[0].trim()) {
+            //if group
             selectedDescrip = nameObj.description;
+            //description same for group
           }
 
-          if (names.length === 2) {
+          if (keys.length === 2) {
             nameF = 'names ' + names[0] + ' and ' + names[1];
           } else {
             var names1 = names.slice(0, names.length - 1).join(", ");
@@ -15739,8 +15753,9 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       });
 
       this.setState({
-        selectedName: evt.target.id,
+        selectedName: evt.target.innerHTML,
         selectedDescrip: selectedDescrip,
+        selectedKey: evt.target.id,
         nameF: nameF,
         showSelectConfirm: !this.state.showSelectConfirm
       });
@@ -15756,16 +15771,14 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       var key = void 0;
       //search names to see if group (theme)
       this.props.allNames.forEach(function (nameObj) {
-        if (nameObj.name === _this7.state.selectedName) {
+        if (nameObj.key === _this7.state.selectedKey) {
           //if single name
-          key = nameObj.key;
-          _this7.props.removeNameFromList(key);
+          _this7.props.removeNameFromList(_this7.state.selectedKey);
         } else {
-          _this7.state.selectedName.split(",").forEach(function (name) {
+          _this7.state.selectedKey.split(",").forEach(function (key) {
             _this7.props.allNames.forEach(function (nameObj) {
-              if (nameObj.name === name.trim()) {
-                key = nameObj.key;
-                _this7.props.removeNameFromList(key);
+              if (nameObj.key === key.trim()) {
+                _this7.props.removeNameFromList(nameObj.key);
               }
             });
           });
@@ -15774,6 +15787,8 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
 
       this.setState({
         selectedName: '',
+        selectedKey: '',
+        selectedDescrip: '',
         nameF: ''
       });
     }
@@ -15841,26 +15856,26 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
               null,
               'Add a Name: \xA0',
               _react2.default.createElement('br', null),
-              _react2.default.createElement('input', { type: 'text', className: 'nameadd', id: 'addName', value: this.state.addName, onChange: this.handleChange('addName'), onClick: this.showHint }),
-              this.state.dirty && !this.state.warnDuplicate ? _react2.default.createElement(
-                'div',
-                { className: 'small' },
-                'To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.',
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('textarea', {
-                  className: 'nameadd',
-                  maxLength: '100',
-                  placeholder: 'optional: add a short description',
-                  value: this.state.description,
-                  onChange: this.handleChange('description') })
-              ) : null,
-              this.state.warnDuplicate && _react2.default.createElement(
-                'div',
-                { className: 'small' },
-                'Hey, ',
-                this.state.duplicateMsg,
-                ' already on the list!'
-              )
+              _react2.default.createElement('input', { type: 'text', className: 'nameadd', id: 'addName', value: this.state.addName, onChange: this.handleChange('addName'), onClick: this.showHint })
+            ),
+            this.state.dirty && !this.state.warnDuplicate ? _react2.default.createElement(
+              'div',
+              { className: 'small' },
+              'To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('textarea', {
+                className: 'nameadd',
+                maxLength: '100',
+                placeholder: 'optional: add a short description',
+                value: this.state.description,
+                onChange: this.handleChange('description') })
+            ) : null,
+            this.state.warnDuplicate && _react2.default.createElement(
+              'div',
+              { className: 'small' },
+              'Hey, ',
+              this.state.duplicateMsg,
+              ' already on the list!'
             ),
             this.state.selectedTags ? this.renderTags(this.state.selectedTags) : null,
             _react2.default.createElement('br', null),
