@@ -332,45 +332,47 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
   selectName(evt) {
     evt.preventDefault()
-    const keyValue = evt.target.id
-    const name = evt.target.innerHTML
+    const keyStr = evt.target.id
+    const nameStr = evt.target.innerHTML
     let nameF, selectedDescrip
 
     //search to see if group (theme)
-    this.props.allNames.forEach(nameObj => {
-      if (nameObj.key === keyValue) { //if single name
-        nameF = `name ${nameObj.name}`
-        selectedDescrip = nameObj.description
-      } else if (keyValue === 'close') { //if hitting close button
-        this.setState({
-          showSelectConfirm: false
-        })
-       } else {
-        const keys = keyValue.split(", ")
-        const names = name.split(", ")
-        if (nameObj.key === keys[0].trim()) { //if group
+     this.props.allNames.forEach(nameObj => {
+
+        if (nameObj.key === keyStr) { //if single name
+          nameF = `name ${nameObj.name}`
           selectedDescrip = nameObj.description
-          //description same for group
-        }
-
-        if (keys.length === 2) {
-          nameF = `names ${names[0]} and ${names[1]}`
+        } else if (keyStr === 'close') { //if hitting close button
+          this.setState({
+            showSelectConfirm: false
+          })
         } else {
-          let names1 = names.slice(0, names.length-1).join(", ")
-          let names2 = names[names.length-1]
-          nameF = `names ${names1}, and ${names2}`
+          const keys = keyStr.split(", ")
+          const names = nameStr.split(", ")
+          if (nameObj.key === keys[0].trim()) { //if group
+            selectedDescrip = nameObj.description
+            //description same for group
+          }
+
+          if (keys.length === 2) {
+            nameF = `names ${names[0]} and ${names[1]}`
+          } else if (keys.length > 2) {
+            let names1 = names.slice(0, names.length-1).join(", ")
+            let names2 = names[names.length-1]
+            nameF = `names ${names1}, and ${names2}`
+          }
         }
-       }
+      })
 
-    })
-
-    this.setState({
-      selectedName: evt.target.innerHTML,
-      selectedDescrip: selectedDescrip,
-      selectedKey: evt.target.id,
-      nameF: nameF,
-      showSelectConfirm: !this.state.showSelectConfirm
-    })
+    if (keyStr !== 'close') {
+      this.setState({
+        selectedName: evt.target.innerHTML,
+        selectedDescrip: selectedDescrip,
+        selectedKey: evt.target.id,
+        nameF: nameF,
+        showSelectConfirm: !this.state.showSelectConfirm
+      })
+    }
   }
 
   chooseName(evt) {

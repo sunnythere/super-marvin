@@ -15717,25 +15717,26 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       var _this6 = this;
 
       evt.preventDefault();
-      var keyValue = evt.target.id;
-      var name = evt.target.innerHTML;
+      var keyStr = evt.target.id;
+      var nameStr = evt.target.innerHTML;
       var nameF = void 0,
           selectedDescrip = void 0;
 
       //search to see if group (theme)
       this.props.allNames.forEach(function (nameObj) {
-        if (nameObj.key === keyValue) {
+
+        if (nameObj.key === keyStr) {
           //if single name
           nameF = 'name ' + nameObj.name;
           selectedDescrip = nameObj.description;
-        } else if (keyValue === 'close') {
+        } else if (keyStr === 'close') {
           //if hitting close button
           _this6.setState({
             showSelectConfirm: false
           });
         } else {
-          var keys = keyValue.split(", ");
-          var names = name.split(", ");
+          var keys = keyStr.split(", ");
+          var names = nameStr.split(", ");
           if (nameObj.key === keys[0].trim()) {
             //if group
             selectedDescrip = nameObj.description;
@@ -15744,7 +15745,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
 
           if (keys.length === 2) {
             nameF = 'names ' + names[0] + ' and ' + names[1];
-          } else {
+          } else if (keys.length > 2) {
             var names1 = names.slice(0, names.length - 1).join(", ");
             var names2 = names[names.length - 1];
             nameF = 'names ' + names1 + ', and ' + names2;
@@ -15752,13 +15753,15 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
         }
       });
 
-      this.setState({
-        selectedName: evt.target.innerHTML,
-        selectedDescrip: selectedDescrip,
-        selectedKey: evt.target.id,
-        nameF: nameF,
-        showSelectConfirm: !this.state.showSelectConfirm
-      });
+      if (keyStr !== 'close') {
+        this.setState({
+          selectedName: evt.target.innerHTML,
+          selectedDescrip: selectedDescrip,
+          selectedKey: evt.target.id,
+          nameF: nameF,
+          showSelectConfirm: !this.state.showSelectConfirm
+        });
+      }
     }
   }, {
     key: 'chooseName',
