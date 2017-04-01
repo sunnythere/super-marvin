@@ -20,6 +20,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     this.state = {
       addName: '',
+      description: '',
       selectedTags: [],
       sort: 'alltags',
       keyArr: [],
@@ -29,6 +30,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       renderedList: [],
       headerDivClass: 'div-space almostwhite',
       selectedName: '',
+      selectedDescrip: '',
       nameF: '',
       dirty: false,
       warnDuplicate: false,
@@ -64,6 +66,11 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
           }
         })
       }
+    }
+
+    this.handleChangeBool = field => evt => {
+      evt.preventDefault()
+      this.setState({ [field]: !this.state[field] })
     }
 
   }
@@ -209,7 +216,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
         show = nameGroup.map(name => name.name).join(", ")
       }
 
-      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectName}><li id={show}>{show}</li></a>)
+      return (<a className="name-link" key={`${nameGroup}-${idx}`} onClick={this.selectName}><li className="name" id={show}>{show}</li></a>)
     })
 
     return (
@@ -264,7 +271,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     evt.preventDefault()
 
     const justTagNames = this.state.selectedTags.map(tagObj => tagObj.tagName)
-
+    let description = this.state.description.trim()
     let name = this.state.addName.trim() //trim any surrounding white space
     if (name[0] === "\"" && name[name.length-1] === "\"" || name[0] === "\'" && name[name.length-1] === "\'") {
       //trim quotes
@@ -296,6 +303,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       name.forEach((oneName, idx) => {
         this.props.addOneName({
           name: oneName,
+          description: description ? description : null,
           tags: justTagNames,
           theme: name.length > 1 ? `${name}-${name.length}` : null
         })
@@ -313,18 +321,23 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
   selectName(evt) {
     evt.preventDefault()
     const name = evt.target.id
-    let nameF
+    let nameF, selectedDescrip
 
     //search names to see if group (theme)
     this.props.allNames.forEach(nameObj => {
       if (nameObj.name === name) { //if single name
         nameF = `name ${name}`
+        selectedDescrip = nameObj.description
       } else if (name === 'close') {
         this.setState({
           showSelectConfirm: false
         })
       } else {
         const names = name.split(", ")
+        if (nameObj.name === names[0].trim()) {
+          selectedDescrip = nameObj.description
+        }
+
         if (names.length === 2) {
           nameF = `names ${names[0]} and ${names[1]}`
         } else {
@@ -333,10 +346,12 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
           nameF = `names ${names1}, and ${names2}`
         }
       }
+
     })
 
     this.setState({
       selectedName: evt.target.id,
+      selectedDescrip: selectedDescrip,
       nameF: nameF,
       showSelectConfirm: !this.state.showSelectConfirm
     })
@@ -430,12 +445,21 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 <br/>
                 <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint}/>
                 { this.state.dirty && !this.state.warnDuplicate ?
-                <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.</div>
+                <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>
+                  <textarea
+                    className="nameadd"
+                    maxLength="100"
+                    placeholder="optional: add a short description"
+                    value={this.state.description}
+                    onChange={this.handleChange('description')}/>
+                </div>
+
                 : null
                 }
                 { this.state.warnDuplicate &&
                   <div className="small">Hey, {this.state.duplicateMsg} already on the list!</div>
                 }
+
               </label>
 
               {
@@ -459,11 +483,13 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
           this.state.showSelectConfirm &&
 
           <div className="selectConfirm" id="selectConfirm">
-
-            Would you like to use the {this.state.nameF}?
-            <br/>
+            {this.state.selectedDescrip ?
+              <p>{this.state.selectedDescrip}</p>
+              : null}
+            <p className="block">Would you like to use the {this.state.nameF}? &nbsp;
             <span className="small">This will take the name(s) off the list.</span>
-            <br />
+            </p>
+
             <button className="name-yes" onClick={this.chooseName}>Yes, I'm using it! </button>
             <button className="name-no" onClick={this.selectName} id="close">No, not today</button>
 

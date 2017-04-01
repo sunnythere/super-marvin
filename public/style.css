@@ -502,7 +502,7 @@ h4 {
 }
 h5 {
   display: inline-block;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-family: 'Lora', serif;
   margin: .3rem;
 }
@@ -548,7 +548,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Lora', serif;}
   background-image: url('img/IMG_2979_.jpg');
   height: 100%;
   width: 100vw;
-  overflow-y: auto;
+
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -914,12 +914,14 @@ button.tag {
   border: none;
   border-radius: 16px;
 }
+/* input field */
 .nameadd {
-/*  border: none;
+/*
   padding: 2px;
   background-color: rgba(0,0,0,0);
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1.1rem;*/
+  border: 1px solid lightgrey;
   margin: none;
   background-color: white;
   display: block;
@@ -946,6 +948,9 @@ button.tag {
 .yellowgreen {
   background-color: yellowgreen;
 }
+.green {
+  background-color: #479911;
+}
 .peacock {
   background-color: #0f89c5;
 }
@@ -961,9 +966,7 @@ button.tag {
 .almostwhite {
   background-color: rgba(252,252,252,0.8);
 }
-.tag3 {
-  background-color: #479911;
-}
+
 .tag4 {
   background-color: #3CAFFF;
 }
@@ -1008,7 +1011,7 @@ hr {
 
 select {
   background-color: white;
-  border: none;
+  border: 1px solid lightgrey;
   padding: 2px;
 }
 
@@ -1031,6 +1034,10 @@ select {
 ul {
   list-style-type: circle;
   margin-top: .3rem;
+}
+
+.block {
+  display: block;
 }
 
 .name-link {
@@ -1081,16 +1088,38 @@ button.name-yes {
   transition: background .5s ease-in;
 }
 
+.name {
+  font-size: 1.2rem;
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
 @media all and (min-width: 450px) {
   .nameadd {
     display: inline-block;
-    width: 200px;
+    width: 300px;
   }
   .div-space {
     padding: 1.5rem;
   }
   .submit-btn {
-    margin: 4px auto 4px 155px;
+    margin: 4px auto 4px 255px;
 
   }
 }
