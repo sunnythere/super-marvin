@@ -10,8 +10,11 @@
             <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
-        <text id="text-4" font-family="Galada-Regular, Galada" font-size="20" font-weight="normal" letter-spacing="0.421052635" fill-opacity="0.892549819" fill="#FBFBFB">
-            <tspan x="8.5" y="37">Add</tspan>
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Stardos+Stencil:400,700');
+        </style>
+        <text id="text-4" font-family="StardosStencil-Bold, Stardos Stencil" font-size="21" font-weight="bold" letter-spacing="-0.0599999987" fill-opacity="0.95" fill="#FBFAFA">
+            <tspan x="8" y="37">Add</tspan>
         </text>
         <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
             <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
@@ -28,7 +31,7 @@
                 <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
                 <use fill="#0AAAB4" fill-rule="evenodd" xlink:href="#path-1"></use>
             </g>
-            <g id="Add" mask="url(#mask-2)" fill-opacity="0.892549819" fill="#FBFBFB">
+            <g id="Add" mask="url(#mask-2)" fill-opacity="0.95" fill="#FBFAFA">
                 <use filter="url(#filter-5)" xlink:href="#text-4"></use>
                 <use xlink:href="#text-4"></use>
             </g>

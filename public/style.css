@@ -489,21 +489,21 @@ h1 {  font-size: 3.6rem;   font-family: 'Raleway', sans-serif;}
 h2 {
   display: inline-block;
   font-size: 2.7rem;
-  font-family: 'Galada', sans-serif;
-  margin: .5rem 0rem;
+  font-family: 'Stardos Stencil', serif;
+  margin: .4rem 0rem;
   color: rgba(252,252,252,0.8);
 }
 h3 {  font-size: 2.0rem;   font-family: 'Raleway', sans-serif;}
 h4 {
   display: inline-block;
   font-size: 1.8rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Stardos Stencil', serif;
   margin: .3rem;
 }
 h5 {
   display: inline-block;
   font-size: 1.6rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Stardos Stencil', serif;
   margin: .3rem;
 }
 h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
@@ -1009,11 +1009,11 @@ select {
   box-sizing: border-box;
   position: fixed;
   height: 160px;
-  width: 230px;
+  width: 220px;
   top: 50%;
   left: 50%;
   margin-top: -120px;
-  margin-left: -115px;
+  margin-left: -110px;
   z-index: 5;
   border-radius: 5px;
   padding: 0.8rem 1rem;

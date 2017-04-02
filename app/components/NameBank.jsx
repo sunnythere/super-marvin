@@ -115,6 +115,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.setState({
       newTag: '',
       showCtrlPanel: false,
+      sampleTagColor: 'grey',
       keyArr: []
     })
     window.removeEventListener('click', this.ctrlPanelClose, false)
@@ -251,7 +252,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     return (
       <div key={`nameGroup-${arrSection[0].length}`}>
-         <h5>{listTitle}</h5>
+         <h4>{listTitle}</h4>
          <ul>{names}</ul>
       </div> )
   }
@@ -559,7 +560,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 <input type="text" name="newTag" id="ctrl1" value={this.state.newTag} className="tag-ctrl" onChange={this.handleChange('newTag')} />
               </label>
 
-              <label>Click to Pick a Color: </label> <br/>
+              <label>{ !this.state.showColorPicker ? (this.state.sampleTagColor === 'grey' ? 'Click to Pick a Color:' : 'Tag preview:') : 'Click tag again when done.' }</label> <br/>
 
                 <button className="tag" style={{ backgroundColor: this.state.sampleTagColor }} id="ctrl2" onClick={this.clickSampleTag}>{this.state.newTag}</button>
                 { this.state.showColorPicker &&
