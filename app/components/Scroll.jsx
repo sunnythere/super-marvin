@@ -18,7 +18,6 @@ export default class Scroll extends Component {
 
 
   componentDidMount() {
-        console.log("PROPS in scroll", this.props)
     window.addEventListener('scroll', this.handleScroll)
   }
 
@@ -27,7 +26,7 @@ export default class Scroll extends Component {
   }
 
   onWindowScroll(evt) {
-    console.log('HEY HEY', evt)
+
   }
 
   handleScroll(evt) {

@@ -47,7 +47,6 @@ const addAName = (name) => ({
 
 export const addOneName = (nameObj) =>
   (dispatch) => {
-    console.log('NameObj ', nameObj)
     nameObj.time = firebase.database.ServerValue.TIMESTAMP
     database().ref('names').push(nameObj)
   }
@@ -126,8 +125,6 @@ export const removeNameFromList = (nameKey) =>
 
     nameRef.once('value', (snapshot) => {
       if (snapshot.val()) {
-        console.log('SNAPSHOT??' , snapshot.val())
-        // console.log('REF??'
         database().ref(`oldNames/${nameKey}/`).set(snapshot.val())
         nameRef.remove()
         .catch(err => console.log(err))

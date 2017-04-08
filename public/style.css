@@ -545,7 +545,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   min-width: 760px;
 }
 .parallax {
-  background-image: url('img/IMG_0753.png');
+  background-image: url('img/IMG_1683.JPG');
   min-height: 100vh;
   height: 100%;
   /*width: 100vw;*/
@@ -574,7 +574,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   min-width: 750px;
   box-sizing: border-box;
 }
-#navbar-name {  /* name bank*/
+#navbar-name {  /* name bank - see media query*/
   position: fixed;
   top: 0px;
   width: 100%;
@@ -600,7 +600,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   background-color: white;
   z-index: 5;
   /*width: 100px;*/
-  /*  height: 50px*/;
+  /*  height: 50px*/
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -815,10 +815,11 @@ label {
   width: auto;
   padding: 5px 10px 6px 10px;
   margin: 3px;
-  float: right;
-}
-#ctrlClose {
-  background-color: darkgrey;
+  position: absolute;
+  bottom: .8rem;
+  right: 1rem;
+  z-index: -1;
+  /*float: right;*/
 }
 
 input[type=submit] {
@@ -904,18 +905,38 @@ input[type=submit] {
 
 /* name bank */
 .container {
-  min-height: 85vh;
+  min-height: 100vh;
   height: 100%;
-  width: 85%;
+  width: 100%;
   box-sizing: border-box;
-  margin: 80px auto auto auto;
+  margin: 0;
   padding: none;
   background-color: rgba(250,250,250,0.6);
+/*  background-image: url('img/IMG_0753.png');
+  background-position: -100px 0;
+  background-size: auto 100%;*/
 }
+.cat-bg {
+  background: url('img/IMG_2979_.jpg') 20% 20%/100% auto no-repeat;
+    height: 60px;
+}
+
+.slice {
+  height: 80px;
+}
+.slice2 {
+  background: transparent;
+  height: 12px;
+}
+.slice3 {
+  background: url('img/IMG_2979_.jpg') 20% 50%/100% auto no-repeat;
+
+  background-color: rgba(0,0,0,.95);
+}
+
 
 /* input field */
 .nameadd {
-
   border: 1px solid lightgrey;
   margin: 2px 0px;
   background-color: white;
@@ -923,9 +944,12 @@ input[type=submit] {
   width: 100%;
   box-sizing: border-box;
 }
+#nameadd-descrip {
+  margin-top: 6px;
+}
 
 .div-space {
-  padding: 1.75rem;
+  padding: 1.25rem 1.75rem;
 }
 
 button.tag {
@@ -1012,7 +1036,7 @@ select {
   width: 220px;
   top: 50%;
   left: 50%;
-  margin-top: -120px;
+  margin-top: -110px;
   margin-left: -110px;
   z-index: 5;
   border-radius: 5px;
@@ -1023,6 +1047,7 @@ select {
 
 ul {
   list-style-type: circle;
+  list-style-position: outside;
   margin-top: .3rem;
 }
 
@@ -1107,6 +1132,25 @@ button.name-yes {
 .example-leave.example-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
+}
+
+.ctrlbtn-tag {
+  background-color: #62b431;
+  border: none;
+  border-radius: 3px;
+  width: auto;
+  padding: 5px 10px 6px 10px;
+  margin: 3px;
+  position: absolute;
+  bottom: .8rem;
+  right: 1rem;
+  z-index: -1;
+  /*float: right;*/
+}
+#ctrlClose {
+  padding: 5px 9px 6px 9px;
+  background-color: darkgrey;
+  right: 5rem;
 }
 
 @media all and (min-width: 450px) {

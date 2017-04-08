@@ -5,7 +5,7 @@ import Scroll from './Scroll'
 export default (props) => {
 
   return (
-    <div className="parallax col-12">
+    <div className="col-12">
       <Scroll path={props.location.pathname}/>
 
       <div>

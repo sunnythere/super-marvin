@@ -20,6 +20,9 @@ module.exports = {
         }]
       }]
   },
+  externals: {
+    fs: '{}'
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '*']
   },

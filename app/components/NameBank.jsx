@@ -31,7 +31,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       sampleTagColor: 'grey',
       showColorPicker: false,
       renderedList: [],
-      headerDivClass: 'div-space almostwhite',
+      headerDivColor: '#464646',
       selectedName: '',
       selectedKey: '',
       selectedDescrip: '',
@@ -56,6 +56,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.showHint = this.showHint.bind(this)
     this.clickSampleTag = this.clickSampleTag.bind(this)
     this.touchEnd = this.touchEnd.bind(this)
+    this.randomPic = this.randomPic.bind(this)
 
     this.handleChange = (field) => (evt) => {
       this.setState({ [field]: evt.target.value })
@@ -68,7 +69,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       if (field === 'sort') {
         this.props.allTags.forEach(tagObj => {
           if (tagObj.tagName === value) {
-            this.setState({ headerDivClass: `div-space ${tagObj.color}` })
+            this.setState({ headerDivColor: ` ${tagObj.color}` })
           }
         })
       }
@@ -228,7 +229,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     else if (arrSection[0].length === 2) { listTitle = "Pairs" }
     else if (arrSection[0].length === 3) { listTitle = "Triplets" }
     else if (arrSection[0].length === 4) { listTitle = "Quartets" }
-    else { listTitle = `Groups of ${arrSection[0].length + 1}` }
+    else { listTitle = `Groups of ${arrSection[0].length}` }
 
     let show, keyValue
     let names = arrSection.map((nameGroup, idx) => {
@@ -299,14 +300,14 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
   }
 
   touchEnd(evt) {
-    console.log('altKey' , evt.altKey)
-    console.log('changedTouches' , evt.changedTouches)
-    console.log('ctrlKey' , evt.ctrlKey)
-    console.log('getModifierState(69)' , evt.getModifierState(69))
-    console.log('metaKey' , evt.metaKey)
-    console.log('shiftKey' , evt.shiftKey)
-    console.log('targetTouches' , evt.targetTouches)
-    console.log('touches' , evt.touches)
+    // console.log('altKey' , evt.altKey)
+    // console.log('changedTouches' , evt.changedTouches)
+    // console.log('ctrlKey' , evt.ctrlKey)
+    // console.log('getModifierState(69)' , evt.getModifierState(69))
+    // console.log('metaKey' , evt.metaKey)
+    // console.log('shiftKey' , evt.shiftKey)
+    // console.log('targetTouches' , evt.targetTouches)
+    // console.log('touches' , evt.touches)
   }
 
   handleAddNameSubmit(evt) {
@@ -436,6 +437,21 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     })
   }
 
+  randomPic() {
+    //catbg#.png
+    let num = 7
+    //num = number of pics
+    let arr = []
+    for (let x=0; x < num; x++) {
+      arr.push(`catbg${x}.png`)
+    }
+
+    let part = 10.0/num
+    let pick = Math.random()*10
+    let idx = Math.round(pick/part)
+
+    return arr[idx]
+  }
 
 
 // --------------- RENDER ---------------
@@ -443,12 +459,15 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
     // console.log('state', this.state)
     // console.log('props', this.props)
+
+
     return (
       <div className="container">
+        <div className="cat-bg"></div>
 
         {// --------------- sort dropdown ---------------
         }
-        <div className={this.state.headerDivClass}>
+        <div className="div-space" style={{ backgroundColor: this.state.headerDivColor }}>
           <form>
           <label>➣ &nbsp;
           <select onChange={this.handleChangeDropDown('sort')} defaultValue="alltags">
@@ -470,10 +489,12 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
           </form>
         </div>
 
+        <div className= "slice2"></div>
+
         {// --------------- name list ---------------
         }
 
-        <div className="div-space">
+        <div className="cat-bg1">
 
 
             {
@@ -481,7 +502,14 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
               this.renderList(this.props.allNames)
                .map((nameArr, idx) => {
-                  return (this.formatListSection(nameArr))
+                  return (
+                  <span key={idx}>
+                    <div className="div-space almostwhite">
+                      {this.formatListSection(nameArr)}
+                    </div>
+                    <div className="slice" style={{ background: `url(img/catbg${idx}.png) 20% 10%/100% auto` }}> &nbsp;</div>
+                  </span>
+                  )
                 })
 
               : null
@@ -489,6 +517,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
 
 
         </div>
+        <div className="almostwhite"></div>
 
         {// step1: ------------- add name ---------------
         }
@@ -499,8 +528,10 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint} onTouchStart={this.touchEnd}/>
               </label>
                 { this.state.dirty && !this.state.warnDuplicate ?
-                <div className="small">To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>
+                <div className="small"><img src="img/arrow.svg" /> To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>
+
                   <textarea
+                    id="nameadd-descrip"
                     className="nameadd"
                     maxLength="100"
                     placeholder="optional: add a short description"
@@ -524,11 +555,15 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 <input id="submit-btn-cat" type="submit" defaultValue=""/>
                 <br />
 
-              {
-                this.renderTags(this.props.allTags)
-              }
+
 
             </form>
+        </div>
+
+        <div className="div-space slice3">
+            {
+              this.renderTags(this.props.allTags)
+            }
         </div>
 
         { // --------------- nameselect panel ---------------
@@ -571,8 +606,8 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
                 }
                 <br />
                 <br />
-                <input type="button" defaultValue="cancel" className="ctrlbtn" id="ctrlClose" />
-                <input type="submit" defaultValue="add" className="ctrlbtn"/>
+                <input type="button" defaultValue="cancel" className="ctrlbtn-tag" id="ctrlClose" />
+                <input type="submit" defaultValue="add" className="ctrlbtn-tag"/>
 
             </form>
           </div>

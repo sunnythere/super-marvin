@@ -6639,7 +6639,6 @@ var Scroll = function (_Component) {
   _createClass(Scroll, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log("PROPS in scroll", this.props);
       window.addEventListener('scroll', this.handleScroll);
     }
   }, {
@@ -6649,9 +6648,7 @@ var Scroll = function (_Component) {
     }
   }, {
     key: 'onWindowScroll',
-    value: function onWindowScroll(evt) {
-      console.log('HEY HEY', evt);
-    }
+    value: function onWindowScroll(evt) {}
   }, {
     key: 'handleScroll',
     value: function handleScroll(evt) {
@@ -6883,7 +6880,6 @@ var addAName = function addAName(name) {
 
 var addOneName = exports.addOneName = function addOneName(nameObj) {
   return function (dispatch) {
-    console.log('NameObj ', nameObj);
     nameObj.time = _firebase2.default.database.ServerValue.TIMESTAMP;
     (0, _firebase3.database)().ref('names').push(nameObj);
   };
@@ -6961,8 +6957,6 @@ var removeNameFromList = exports.removeNameFromList = function removeNameFromLis
 
     nameRef.once('value', function (snapshot) {
       if (snapshot.val()) {
-        console.log('SNAPSHOT??', snapshot.val());
-        // console.log('REF??'
         (0, _firebase3.database)().ref('oldNames/' + nameKey + '/').set(snapshot.val());
         nameRef.remove().catch(function (err) {
           return console.log(err);
@@ -17881,7 +17875,7 @@ exports.default = function (props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'parallax col-12' },
+    { className: 'col-12' },
     _react2.default.createElement(_Scroll2.default, { path: props.location.pathname }),
     _react2.default.createElement(
       'div',
@@ -18023,7 +18017,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       sampleTagColor: 'grey',
       showColorPicker: false,
       renderedList: [],
-      headerDivClass: 'div-space almostwhite',
+      headerDivColor: '#464646',
       selectedName: '',
       selectedKey: '',
       selectedDescrip: '',
@@ -18048,6 +18042,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
     _this.showHint = _this.showHint.bind(_this);
     _this.clickSampleTag = _this.clickSampleTag.bind(_this);
     _this.touchEnd = _this.touchEnd.bind(_this);
+    _this.randomPic = _this.randomPic.bind(_this);
 
     _this.handleChange = function (field) {
       return function (evt) {
@@ -18064,7 +18059,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
         if (field === 'sort') {
           _this.props.allTags.forEach(function (tagObj) {
             if (tagObj.tagName === value) {
-              _this.setState({ headerDivClass: 'div-space ' + tagObj.color });
+              _this.setState({ headerDivColor: ' ' + tagObj.color });
             }
           });
         }
@@ -18263,7 +18258,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
       } else if (arrSection[0].length === 4) {
         listTitle = "Quartets";
       } else {
-        listTitle = 'Groups of ' + (arrSection[0].length + 1);
+        listTitle = 'Groups of ' + arrSection[0].length;
       }
 
       var show = void 0,
@@ -18358,14 +18353,14 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
   }, {
     key: 'touchEnd',
     value: function touchEnd(evt) {
-      console.log('altKey', evt.altKey);
-      console.log('changedTouches', evt.changedTouches);
-      console.log('ctrlKey', evt.ctrlKey);
-      console.log('getModifierState(69)', evt.getModifierState(69));
-      console.log('metaKey', evt.metaKey);
-      console.log('shiftKey', evt.shiftKey);
-      console.log('targetTouches', evt.targetTouches);
-      console.log('touches', evt.touches);
+      // console.log('altKey' , evt.altKey)
+      // console.log('changedTouches' , evt.changedTouches)
+      // console.log('ctrlKey' , evt.ctrlKey)
+      // console.log('getModifierState(69)' , evt.getModifierState(69))
+      // console.log('metaKey' , evt.metaKey)
+      // console.log('shiftKey' , evt.shiftKey)
+      // console.log('targetTouches' , evt.targetTouches)
+      // console.log('touches' , evt.touches)
     }
   }, {
     key: 'handleAddNameSubmit',
@@ -18512,6 +18507,23 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
         nameF: ''
       });
     }
+  }, {
+    key: 'randomPic',
+    value: function randomPic() {
+      //catbg#.png
+      var num = 7;
+      //num = number of pics
+      var arr = [];
+      for (var x = 0; x < num; x++) {
+        arr.push('catbg' + x + '.png');
+      }
+
+      var part = 10.0 / num;
+      var pick = Math.random() * 10;
+      var idx = Math.round(pick / part);
+
+      return arr[idx];
+    }
 
     // --------------- RENDER ---------------
 
@@ -18522,12 +18534,15 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
 
       // console.log('state', this.state)
       // console.log('props', this.props)
+
+
       return _react2.default.createElement(
         'div',
         { className: 'container' },
+        _react2.default.createElement('div', { className: 'cat-bg' }),
         _react2.default.createElement(
           'div',
-          { className: this.state.headerDivClass },
+          { className: 'div-space', style: { backgroundColor: this.state.headerDivColor } },
           _react2.default.createElement(
             'form',
             null,
@@ -18558,13 +18573,28 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
             )
           )
         ),
+        _react2.default.createElement('div', { className: 'slice2' }),
         _react2.default.createElement(
           'div',
-          { className: 'div-space' },
+          { className: 'cat-bg1' },
           this.props.allNames ? this.renderList(this.props.allNames).map(function (nameArr, idx) {
-            return _this8.formatListSection(nameArr);
+            return _react2.default.createElement(
+              'span',
+              { key: idx },
+              _react2.default.createElement(
+                'div',
+                { className: 'div-space almostwhite' },
+                _this8.formatListSection(nameArr)
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'slice', style: { background: 'url(img/catbg' + idx + '.png) 20% 10%/100% auto' } },
+                ' \xA0'
+              )
+            );
           }) : null
         ),
+        _react2.default.createElement('div', { className: 'almostwhite' }),
         _react2.default.createElement(
           'div',
           { className: 'div-space almostwhite' },
@@ -18581,9 +18611,11 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
             this.state.dirty && !this.state.warnDuplicate ? _react2.default.createElement(
               'div',
               { className: 'small' },
-              'To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.',
+              _react2.default.createElement('img', { src: 'img/arrow.svg' }),
+              ' To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.',
               _react2.default.createElement('br', null),
               _react2.default.createElement('textarea', {
+                id: 'nameadd-descrip',
                 className: 'nameadd',
                 maxLength: '100',
                 placeholder: 'optional: add a short description',
@@ -18599,9 +18631,13 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
             ),
             this.state.selectedTags ? this.renderTags(this.state.selectedTags) : null,
             _react2.default.createElement('input', { id: 'submit-btn-cat', type: 'submit', defaultValue: '' }),
-            _react2.default.createElement('br', null),
-            this.renderTags(this.props.allTags)
+            _react2.default.createElement('br', null)
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'div-space slice3' },
+          this.renderTags(this.props.allTags)
         ),
         // --------------- nameselect panel ---------------
         this.state.showSelectConfirm && _react2.default.createElement(
@@ -18675,8 +18711,8 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
             }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
-            _react2.default.createElement('input', { type: 'button', defaultValue: 'cancel', className: 'ctrlbtn', id: 'ctrlClose' }),
-            _react2.default.createElement('input', { type: 'submit', defaultValue: 'add', className: 'ctrlbtn' })
+            _react2.default.createElement('input', { type: 'button', defaultValue: 'cancel', className: 'ctrlbtn-tag', id: 'ctrlClose' }),
+            _react2.default.createElement('input', { type: 'submit', defaultValue: 'add', className: 'ctrlbtn-tag' })
           )
         )
       );
@@ -19946,11 +19982,11 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(function (_Com
         _this2.setState(_defineProperty({}, type, value));
       };
     }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      //console.log("PROPS!!!!!", this.props)
-    }
+
+    //componentDidMount() {
+    //console.log("PROPS!!!!!", this.props)
+    //}
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(evt) {

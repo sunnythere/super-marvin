@@ -45,9 +45,9 @@ export default connect(mapState, mapDispatch)(class NavbarName extends Component
     )
   }
 
-  componentDidMount() {
+  //componentDidMount() {
     //console.log("PROPS!!!!!", this.props)
-  }
+  //}
 
   handleSubmit(evt) {
     evt.preventDefault()
