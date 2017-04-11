@@ -12,13 +12,12 @@ class Enter extends Component {
   render() {
 
     return (
-      <div id="div-main" className="parallax1">
+      <div id="main">
 
-        <div id="div-view">
 
               {this.props.children}
 
-        </div>
+
       </div>
 
     )

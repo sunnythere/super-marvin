@@ -463,10 +463,9 @@ template {
 
 
 
-/*------- normalize end ------*/
+/*- ------------------------- normalize end ------------------------- -*/
 
 html {
-  /*color: rgb(250,250,250);*/
   height: 100%;
   width: 100%;
   font-size: 85%;
@@ -482,6 +481,12 @@ body {
 p {
   font-size: 1.1rem;
   display: inline;
+}
+
+a {
+ color: white;
+ text-decoration: underline;
+ font-style: italic;
 }
 
 
@@ -536,6 +541,75 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
 .col-2-s {
   width: 16.66%;
 
+}
+
+/* BUILD */
+#main {
+  height: 100%;
+  width: 100%;
+}
+.build-blue {
+  background: linear-gradient(12deg,  rgb(1, 13, 17), rgb(20, 102, 128), rgb(82, 196, 244), rgb(253, 253, 194) );
+  min-height: 180vh;
+  height: 100%;
+  background-attachment: scroll;
+}
+#build0 {
+  display: block;
+  height: 100%;
+  min-height: 200vh;
+  box-sizing: border-box;
+  background-image: url('img/build0.png');
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: auto 80%;
+}
+/*#build1 {
+  width: 80%;
+  min-height: 200vh;
+  box-sizing: border-box;
+  background-image: url('img/build1.png');
+  background-repeat: no-repeat;
+  background-position: 100% bottom;
+  background-size: 80% auto;
+  z-index: 1;
+}*/
+#build2 {
+  min-height: 200vh;
+  box-sizing: border-box;
+  background-image: url('img/build2.png');
+  background-repeat: no-repeat;
+  background-position: 5% bottom;
+  background-size: auto 33%;
+}
+#build2a {
+  min-height: 200vh;
+  width: 66%;
+  display: inline-block;
+  vertical-align: bottom;
+  box-sizing: border-box;
+  background-image: url('img/build2a.png');
+  background-repeat: no-repeat;
+  background-position: 90% bottom;
+  background-size: auto 37%;
+}
+.lower-mid {
+  color: white;
+  position: absolute;
+  top: 133%;
+  left: 35%;
+}
+
+@media all and (min-width: 1000px) {
+  #build2a {
+    width: 80%;
+  }
+}
+@media all and (min-width: 1500px) {
+  #build2a {
+    width: 90%;
+  }
 }
 
 

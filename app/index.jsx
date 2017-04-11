@@ -5,10 +5,11 @@ import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
 import store from './store'
 
 import Enter from './components/Enter'
+import Build from './components/Build'
 
 import SignUp from './components/SignUp'
 import Add from './components/Add'
-// import AddCat from './AddCat'
+
 // import OneCat from './OneCat'
 import EnterVisitor from './components/EnterVisitor'
 import Scroll from './components/Scroll'
@@ -78,8 +79,8 @@ ReactDOM.render(
       <Route path='/' component={Enter} >
         <IndexRedirect to="/cat" />
         <Route path="/cat" component={CatFlick} />
-        {//<Route path='/cats' component={Cards} onEnter={onEnterCards} />
-      }
+        <Route path="/build" component={Build} />
+
         <Route path="/signup" component={SignUp} />
         <Route path="/add" component={Add} />
 
