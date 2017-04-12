@@ -17653,6 +17653,7 @@ var Build = function (_Component) {
                 'linkedin.com/in/yawenalice'
               ),
               _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
               'If you like cats, you might like my instagram:',
               _react2.default.createElement('br', null),
               _react2.default.createElement(
@@ -17664,7 +17665,11 @@ var Build = function (_Component) {
             _react2.default.createElement(
               'div',
               { id: 'build2a' },
-              this.props.children
+              _react2.default.createElement(
+                'div',
+                { id: 'build3' },
+                this.props.children
+              )
             )
           )
         )

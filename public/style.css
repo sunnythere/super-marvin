@@ -584,7 +584,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   background-size: auto 33%;
 }
 #build2a {
-  min-height: 200vh;
+  min-height: 220vh;
   width: 66%;
   display: inline-block;
   vertical-align: bottom;
@@ -594,10 +594,22 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   background-position: 90% bottom;
   background-size: auto 37%;
 }
+#build3 {
+  min-height: 200vh;
+  width: 66%;
+  display: inline-block;
+  vertical-align: bottom;
+  box-sizing: border-box;
+  background-image: url('img/build3.png');
+  background-repeat: no-repeat;
+  background-position: 70% bottom;
+  background-size: auto 30%;
+}
 .lower-mid {
+  min-height: 200vh;
   color: white;
   position: absolute;
-  top: 133%;
+  top: 113%;
   left: 35%;
 }
 
