@@ -13,6 +13,7 @@ import Add from './components/Add'
 // import OneCat from './OneCat'
 import EnterVisitor from './components/EnterVisitor'
 import Scroll from './components/Scroll'
+import Scroll1 from './components/Scroll1'
 import Navbar from './components/Navbar'
 import Navbar2 from './components/Navbar2'
 import VisitorsContainer from './components/VisitorsContainer'
@@ -77,9 +78,9 @@ ReactDOM.render(
   <Provider store={store}>
   <Router history={browserHistory}>
       <Route path='/' component={Enter} >
-        <IndexRedirect to="/cat" />
+        <IndexRedirect to="/build" />
         <Route path="/cat" component={CatFlick} />
-        <Route path="/build" component={Build} />
+        <Route path="/build" component={Scroll1} />
 
         <Route path="/signup" component={SignUp} />
         <Route path="/add" component={Add} />

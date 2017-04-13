@@ -476,6 +476,7 @@ body {
   height: 100%;
   min-height: 100vh;
   font-size: 1.1rem;
+  overflow-x: hidden;
 }
 
 p {
@@ -550,72 +551,137 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
 }
 .build-blue {
   background: linear-gradient(12deg,  rgb(1, 13, 17), rgb(20, 102, 128), rgb(82, 196, 244), rgb(253, 253, 194) );
-  min-height: 180vh;
+  min-height: 200vh;
   height: 100%;
   background-attachment: scroll;
+  z-index: -5;
 }
-#build0 {
-  display: block;
+.build0 {
   height: 100%;
-  min-height: 200vh;
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  bottom: -5px;
+  left: -10px;
   box-sizing: border-box;
-  background-image: url('img/build0.png');
-  background-attachment: fixed;
-  background-position: bottom;
-  background-repeat: repeat-x;
-  background-size: auto 80%;
-}
-/*#build1 {
-  width: 80%;
-  min-height: 200vh;
-  box-sizing: border-box;
-  background-image: url('img/build1.png');
-  background-repeat: no-repeat;
-  background-position: 100% bottom;
-  background-size: 80% auto;
+  overflow-x: hidden;
   z-index: 1;
-}*/
+}
+.build0img {
+  position: fixed;
+  bottom: 0px;
+  left: -3px;
+  box-sizing: border-box;
+  z-index: 3;
+}
 #build2 {
-  min-height: 200vh;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  left: 15%;
   box-sizing: border-box;
   background-image: url('img/build2.png');
   background-repeat: no-repeat;
-  background-position: 5% bottom;
-  background-size: auto 33%;
+  background-position: 0% 40%;
+  background-size: auto 28%;
 }
 #build2a {
-  min-height: 220vh;
-  width: 66%;
-  display: inline-block;
-  vertical-align: bottom;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  left: 15%;
   box-sizing: border-box;
   background-image: url('img/build2a.png');
   background-repeat: no-repeat;
-  background-position: 90% bottom;
-  background-size: auto 37%;
+  background-position: 40% 34%;
+  background-size: auto 35%;
+  z-index: 1;
+}
+#build2alight {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  left: 15%;
+  box-sizing: border-box;
+  background-image: url('img/build2a-light.png');
+  background-repeat: no-repeat;
+  background-position: 40% 34%;
+  background-size: auto 35%;
 }
 #build3 {
   min-height: 200vh;
   width: 66%;
-  display: inline-block;
   vertical-align: bottom;
   box-sizing: border-box;
   background-image: url('img/build3.png');
   background-repeat: no-repeat;
   background-position: 70% bottom;
-  background-size: auto 30%;
+  background-size: auto 25%;
 }
 .lower-mid {
-  min-height: 200vh;
+  font-size: .9rem;
   color: white;
   position: absolute;
-  top: 113%;
-  left: 35%;
+  top: 53%;
+  left: 25%;
+}
+#click0 {
+  height: 40px;
+  width: 26px;
+  display: inline-block;
+  position: fixed;
+  bottom: 215px;
+  left: 102px;
+  z-index: 5;
+}
+#click1 {
+  height: 40px;
+  width: 32px;
+  display: inline-block;
+  position: fixed;
+  bottom: 200px;
+  left: 212px;
+  z-index: 5;
+}
+.hello {
+  position: absolute;
+  display: inline-block;
+    bottom: 365px;
+    left: 65px;
+  z-index: 4;
+}
+.links {
+  position: absolute;
+  display: inline-block;
+  bottom: 280px;
+  left: 110px;
+  z-index: 4;
+}
+.z2 {
+  z-index: 2;
 }
 
-@media all and (min-width: 1000px) {
-  #build2a {
-    width: 80%;
+
+@media screen and (max-width: 600px) and (orientation: landscape) {
+  .build-blue{
+    background: linear-gradient(12deg,  rgb(253, 253, 194), rgb(82, 196, 244), rgb(20, 102, 128), rgb(1, 13, 17));
+  }
+  .hello {
+    position: absolute;
+    display: inline-block;
+      bottom: 280px;
+      left: 110px;
+    z-index: 4;
+  }
+  .links {
+    position: absolute;
+    display: inline-block;
+    bottom: 220px;
+    left: 285px;
+    z-index: 6;
   }
 }
 @media all and (min-width: 1500px) {
