@@ -7,6 +7,7 @@ import store from './store'
 import Enter from './components/Enter'
 import Build from './components/Build'
 
+
 import SignUp from './components/SignUp'
 import Add from './components/Add'
 
@@ -83,7 +84,6 @@ ReactDOM.render(
         <Route path="/build" component={Scroll1} />
 
         <Route path="/signup" component={SignUp} />
-        <Route path="/add" component={Add} />
 
       </Route>
 

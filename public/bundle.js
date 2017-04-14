@@ -10508,7 +10508,8 @@ var Build = function (_Component) {
 
     _this.state = {
       showMsg0: false,
-      showMsg1: false
+      showMsg1: false,
+      showInfo: false
     };
 
     _this.toggleMsg = function (msg) {
@@ -10533,7 +10534,7 @@ var Build = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'build0', style: this.props.opacity },
-          _react2.default.createElement('img', { className: 'build0img', src: 'img/build0-light0sm.png' }),
+          _react2.default.createElement('div', { id: 'build0img-l' }),
           this.state.showMsg0 && _react2.default.createElement(
             'div',
             { className: 'hello' },
@@ -10549,7 +10550,7 @@ var Build = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'build0 z2' },
-          _react2.default.createElement('img', { className: 'build0img', src: 'img/build0sm.png' }),
+          _react2.default.createElement('div', { id: 'build0img' }),
           this.state.showMsg1 && _react2.default.createElement(
             'div',
             { className: 'links' },
@@ -10575,6 +10576,26 @@ var Build = function (_Component) {
                 { href: 'http://www.instagram.com/hyphenlowercase' },
                 'instagram'
               )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'infostar' },
+            _react2.default.createElement(
+              'a',
+              { onClick: this.toggleMsg('showInfo'), className: 'nostylelink' },
+              '*'
+            ),
+            this.state.showInfo && _react2.default.createElement(
+              'div',
+              { id: 'infobubble' },
+              'The cityscape cutouts are made from pages of a 2010 edition of one of my favoriate periodicals,',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://www.good.is/' },
+                'Good Magazine'
+              ),
+              '. The edition is about finding work\u2026 published back when Good still published paper things regularly.  I had it laying around, because apparently I am sometimes a hoarder?'
             )
           )
         )
@@ -48281,8 +48302,7 @@ _reactDom2.default.render(_react2.default.createElement(
       _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/build' }),
       _react2.default.createElement(_reactRouter.Route, { path: '/cat', component: _CatFlick2.default }),
       _react2.default.createElement(_reactRouter.Route, { path: '/build', component: _Scroll4.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _SignUp2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/add', component: _Add2.default })
+      _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _SignUp2.default })
     ),
     _react2.default.createElement(_reactRouter.Route, { path: '/visit', component: _EnterVisitor2.default }),
     _react2.default.createElement(
