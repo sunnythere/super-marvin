@@ -80,10 +80,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
       <Route path='/' component={Enter} >
         <IndexRedirect to="/build" />
-        <Route path="/cat" component={CatFlick} />
-        <Route path="/build" component={Scroll1} />
-
-        <Route path="/signup" component={SignUp} />
+        <Route path="/build" component={Scroll1}/>
 
       </Route>
 
@@ -96,6 +93,8 @@ ReactDOM.render(
            { // <Route path='/time' component={Time} />
          }
         </Route>
+        <Route path="/signup" component={SignUp} />
+
       </Route>
 
       <Route path='/name-enter' component={EnterName} />

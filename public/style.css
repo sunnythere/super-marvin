@@ -487,7 +487,7 @@ p {
 a {
  color: white;
  text-decoration: underline;
- font-style: italic;
+ font-size: small;
 }
 
 
@@ -566,7 +566,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   bottom: 0px;
   left: 0px;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index: 1;
 }
 #build0img {
@@ -577,6 +577,7 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   left: -3px;
   box-sizing: border-box;
   background-image: url('img/build0sm.png');
+  overflow: inherit;
   z-index: 3;
 }
 #build0img-l {
@@ -587,32 +588,22 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   left: -3px;
   box-sizing: border-box;
   background-image: url('img/build0-light0sm.png');
+  overflow: inherit;
   z-index: 3;
 }
-#build2 {
-  height: 100%;
-  width: 100%;
+#build2img {
+  height: 200px;
+  width: 152px;
   position: absolute;
-  top: 40%;
-  left: 15%;
+  bottom: -100%;
+  left: 33px;
   box-sizing: border-box;
-  background-image: url('img/build2.png');
+  background-image: url('img/build2sm.png');
   background-repeat: no-repeat;
-  background-position: 0% 40%;
-  background-size: auto 28%;
+  overflow-x: inherit;
 }
-#build2a {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 40%;
-  left: 15%;
-  box-sizing: border-box;
-  background-image: url('img/build2a.png');
-  background-repeat: no-repeat;
-  background-position: 40% 34%;
-  background-size: auto 35%;
-  z-index: 1;
+#build2aimg {
+  display: none;
 }
 #build2alight {
   height: 100%;
@@ -678,6 +669,30 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
 .z2 {
   z-index: 2;
 }
+.overflow {
+  overflow-x: hidden;
+}
+
+/* mini catflick */
+#calico-divsm {
+  height: 34px;
+  width: 34px;
+  display: inline-block;
+  position: fixed;
+  bottom: 198px;
+  left: 2px;
+  margin: 15% auto 0 auto;
+  background: transparent url('img/calicosprite-sm.png') 0 0 no-repeat;
+  z-index: 4;
+}
+@keyframes calicosm {
+  /* 7 frames */
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -238px; }
+}
+#calico-divsm:hover {
+  animation: calicosm 400ms 300ms steps(7);
+}
 
 
 @media screen and (max-width: 600px) and (orientation: landscape) {
@@ -708,9 +723,9 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
 }
 .nostylelink {
   text-decoration: none;
-  color: darkgrey;
+  color: white;
   font-style: normal;
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   transition: transform .3s ease-in-out;
 }
 .nostylelink:hover {
@@ -723,19 +738,42 @@ h6 {  font-size: 1.0rem;   font-family: 'Raleway', sans-serif;}
   position: fixed;
   bottom: 55px;
   right: 30px;
-  margin: 0.5rem;
-  padding: 0.7rem;
+  margin: 0.4rem;
+  padding: 0.5rem 0.7rem 0.7rem 0.7rem;
   box-sizing: border-box;
   z-index: 10;
-  background-image: url('img/speech.svg');
+  background-image: url('img/speech.min.svg');
   font-size: 1rem;
 }
-
-@media all and (min-width: 1500px) {
-  #build2a {
-    width: 90%;
+.darkgrey {
+  color: #555555;
+}
+@media all and (min-width: 600px) {
+  #build2aimg {
+    display: inline;
+    height: 175px;
+    width: 190px;
+    position: absolute;
+    bottom: -100%;
+    left: 285px;
+    box-sizing: border-box;
+    background-image: url('img/build2asm.png');
+    background-repeat: no-repeat;
+    overflow-x: inherit;
   }
 }
+@media screen and (min-device-pixel-ratio: 1.5) {
+  #build0img {
+    background-image: url('img/build0md2.png');
+  }
+  #build2img {
+    background-image: url('img/build2md.png');
+  }
+  #build2aimg {
+    background-image: url('img/build2amd.png');
+  }
+}
+
 
 
 /* EnterVisitor */
@@ -1207,7 +1245,7 @@ button.tag {
   background-color: teal;
 }*/
 #submit-btn-cat {
-  background-image: url('img/addbtn.svg');
+  background-image: url('img/addbtn.min.svg');
   background-color: transparent; /* test*/
   display: block;
   margin: 8px auto 4px auto;

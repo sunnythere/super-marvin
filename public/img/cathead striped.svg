@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>cathead striped</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M57.8891649,33.02787 C58.5904363,34.7891382 58.9655172,36.6467029 58.9655172,38.5660722 C58.9655172,49.8520108 45.9972134,59.0010717 30,59.0010717 C14.0027866,59.0010717 1.03448276,49.8520108 1.03448276,38.5660722 C1.03448276,36.745117 1.37208581,34.9797909 2.00554305,33.2995476 L0.54842366,33.8588834 L2.19636272,1.15472196 L20.279022,19.3103356 C23.3175335,18.5468006 26.5899508,18.1310728 30,18.1310728 C33.3556111,18.1310728 36.5779496,18.5336332 39.5752791,19.2740346 L57.8387062,0.936923814 L59.4866453,33.6410852 L57.8891649,33.02787 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cathead-striped">
+            <g id="Group">
+                <g id="Triangle-+-Triangle-Mask">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Combined-Shape"></g>
+                    <g id="Group-2" mask="url(#mask-2)" fill="#FAF9F9">
+                        <g transform="translate(30.293103, 30.500000) scale(-1, 1) translate(-30.293103, -30.500000) translate(-6.206897, 3.000000)" id="Rectangle">
+                            <rect x="-1.42108547e-14" y="48" width="72.4137931" height="7"></rect>
+                            <rect x="-1.42108547e-14" y="36" width="72.4137931" height="7"></rect>
+                            <rect x="-1.42108547e-14" y="24" width="72.4137931" height="7"></rect>
+                            <rect x="-1.42108547e-14" y="12" width="72.4137931" height="7"></rect>
+                            <rect x="-1.42108547e-14" y="0" width="72.4137931" height="7"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="8px" height="11px" viewBox="0 0 8 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>⏎</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-weight="bold" font-family="Helvetica-Bold, Helvetica" letter-spacing="-0.0285714287" font-size="10" fill-opacity="0.95">
-        <g id="arrow" transform="translate(-2.000000, 0.000000)" fill="#343434">
-            <text id="⏎" transform="translate(6.500000, 6.000000) rotate(90.000000) translate(-6.500000, -6.000000) ">
-                <tspan x="1" y="10">⏎</tspan>
-            </text>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="8" height="11" viewBox="0 0 8 11"><title>  ⏎</title><desc>  Created with Sketch.</desc><g font-family="Helvetica-Bold, Helvetica" letter-spacing="-0.0285714287" font-size="10" style="fill:none;font-weight:bold"><g fill="#343434"><text transform="translate(-2 0)translate(6.5 6)rotate(90)translate(-6.5 -6)"><tspan x="1" y="10">  ⏎</tspan></text></g></g></svg>
