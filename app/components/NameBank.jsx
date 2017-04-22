@@ -55,7 +55,6 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     this.chooseName = this.chooseName.bind(this)
     this.showHint = this.showHint.bind(this)
     this.clickSampleTag = this.clickSampleTag.bind(this)
-    this.touchEnd = this.touchEnd.bind(this)
     this.randomPic = this.randomPic.bind(this)
 
     this.handleChange = (field) => (evt) => {
@@ -141,7 +140,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
     return tagsArr.map((tagObj, idx) => {
       let classes = `tag ${tagObj.color && tagObj.color[0] !== '#' ? tagObj.color : 'tag99'}`
       let style = { backgroundColor: tagObj.color && tagObj.color[0] === '#' ? tagObj.color : null }
-      return (<button key={`${tagObj.key}-${idx}`} className={classes} style={style} id={tagObj.key} onClick={this.handleClickTag}>{tagObj.tagName}</button> )
+      return (<button key={`${tagObj.key}-${idx}`} className={classes} style={style} id={tagObj.key} onClick={this.handleClickTag} >{tagObj.tagName}</button> )
     })
   }
 
@@ -297,17 +296,6 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
       dirty: true,
       warnDuplicate: false
     })
-  }
-
-  touchEnd(evt) {
-    // console.log('altKey' , evt.altKey)
-    // console.log('changedTouches' , evt.changedTouches)
-    // console.log('ctrlKey' , evt.ctrlKey)
-    // console.log('getModifierState(69)' , evt.getModifierState(69))
-    // console.log('metaKey' , evt.metaKey)
-    // console.log('shiftKey' , evt.shiftKey)
-    // console.log('targetTouches' , evt.targetTouches)
-    // console.log('touches' , evt.touches)
   }
 
   handleAddNameSubmit(evt) {
@@ -525,7 +513,7 @@ export default connect(mapState,mapDispatch)(class NameBank extends Component {
             <form onSubmit={this.handleAddNameSubmit}>
               <label>Add a Name: &nbsp;
                 <br/>
-                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint} onTouchStart={this.touchEnd}/>
+                <input type="text" className="nameadd" id="addName" value={this.state.addName} onChange={this.handleChange('addName')} onClick={this.showHint} />
               </label>
                 { this.state.dirty && !this.state.warnDuplicate ?
                 <div className="small"><img src="img/arrow.svg" /> To enter related names, separate by commas.  To enter a single name containing a comma, surround the name with quotes.<br/>

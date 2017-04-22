@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { randomInt } from '../util/random'
+import { setTodaysDate } from '../reducers/date'
+import { getAstroInfo } from '../reducers/weather'
 
 
+const mapState = (state) => {
+  return ({
+    date: state.date,
+    astro: state.weather.astro
+  })
+}
 
-export default
+const mapDispatch = { getAstroInfo, setTodaysDate }
+
+export default connect(mapState, mapDispatch)(
 class Build extends Component {
 
   constructor (props) {
@@ -15,12 +26,20 @@ class Build extends Component {
       showInfo: false,
       catSays: null,
       showContextMenu: false,
-      build2position: 0
+      build2position: '-2000px',
+      theTime: '',
+      timeOffSet: 0,
+      bground: 'buildBG yellowBlue',
+      touches: [],
+      touchLength: 0
     }
 
     this.handleContextMenu = this.handleContextMenu.bind(this)
     this.contextMenuClose = this.contextMenuClose.bind(this)
     this.checkViewport = this.checkViewport.bind(this)
+    this.setBackground = this.setBackground.bind(this)
+    this.handleTouchStart = this.handleTouchStart.bind(this)
+    this.handleTouchEnd = this.handleTouchEnd.bind(this)
 
     this.toggleMsg = (msg) => (evt) => {
       evt.preventDefault()
@@ -30,19 +49,23 @@ class Build extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.checkViewport, false);
+    document.body.addEventListener('scroll', this.checkViewport, false);
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.astro !== this.props.astro) {
+      this.setBackground(nextProps.astro)
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.checkViewport)
+    document.body.removeEventListener('scroll', this.checkViewport)
   }
 
   checkViewport() {
-
-  //   console.log(window.pageYOffset)
-  //   let position = 100% -(window.pageYOffset * 0.25) + "" + "px"
-  //   console.log('position ', position)
-  //   this.setState({ build2position: position })
+    let position = (-(window.innerHeight * 0.5)  - (window.pageYOffset * 0.5)) + "" + "px"
+    this.setState({ build2position: position })
   }
 
   handleContextMenu(evt) {
@@ -54,7 +77,7 @@ class Build extends Component {
         meow = "meow"
         break;
       case 2:
-        meow = "hey."
+        meow = "oh, hey.  funny seeing you here."
         break;
       case 3:
         meow = "purrrrr"
@@ -63,7 +86,7 @@ class Build extends Component {
         meow = "hey hey"
         break;
       case 5:
-        meow = "I'm a css keyframe animation using a tiny sprite, with an onContextMenu function."
+        meow = "I'm a css keyframe animation using a tiny sprite, with onContextMenu/onTouchStart/onTouchEnd functions."
         break;
       case 6:
         meow = "hello"
@@ -87,18 +110,68 @@ class Build extends Component {
       catSays: meow
     })
 
-    window.addEventListener('click', this.contextMenuClose, false)
+    document.body.addEventListener('click', this.contextMenuClose, false)
+    document.body.addEventListener('touchend', this.contextMenuClose, false)
   }
 
   contextMenuClose(evt) {
     evt.preventDefault()
-
     this.setState({
       showContextMenu: false
     })
-    window.removeEventListener('click', this.contextMenuClose, false)
+    document.body.removeEventListener('click', this.contextMenuClose, false)
+    document.body.removeEventListener('touchend', this.contextMenuClose, false)
   }
 
+  setBackground(astroVar) {
+      // console.log('SET BACKGROUND', astroVar)
+      let bground
+      switch (astroVar) {
+        case 'astronomical_twilight_begin':
+          bground = 'buildBG yellowBlue'
+          break;
+        case 'nautical_twilight_begin':
+          bground = 'buildBG yellowBlue'
+          break;
+        case 'civil_twilight_begin':
+          bground = 'buildBG yellowPink'
+          break;
+        case 'sunrise':
+          bground = 'buildBG blueYellow'
+          break;
+        case 'sunset':
+          bground = 'buildBG pinkYellow'
+          break;
+        case 'civil_twilight_end':
+          bground = 'buildBG darkBlue'
+          break;
+        case 'nautical_twilight_end':
+          bground = 'buildBG darkBlue'
+          break;
+        case 'astronomical_twilight_end':
+          bground = 'buildBG darkBlueRev'
+          break;
+        default:
+          bground = 'buildBG blueYellow'
+          break;
+      }
+      this.setState({ bground: bground })
+  }
+
+  handleTouchStart(evt) {
+    evt.preventDefault()
+    let startTime = new Date()
+    this.setState({ touchLength: startTime})
+  }
+
+  handleTouchEnd(evt) {
+    let endTime = new Date()
+    console.log('endTime:' , endTime)
+    let diff = Number(endTime) - Number(this.state.touchLength)
+    if (diff >= 900) {
+      this.handleContextMenu(evt)
+    }
+  }
 
   render() {
 
@@ -113,14 +186,14 @@ class Build extends Component {
         padding: '.1rem',
         zIndex: '4'
       }
-      // ,
+      //,
       // build2: {
       //   bottom: this.state.build2position
       // }
     }
 
     return (
-      <div className="build-blue" >
+      <div className={this.state.bground}>
 
           <div id="click0" onClick={this.toggleMsg('showMsg0')}/>
           <div id="click1" onClick={this.toggleMsg('showMsg1')}/>
@@ -144,7 +217,7 @@ class Build extends Component {
 
           <div className="build0 z2">
 
-            <div id="calico-divsm" onContextMenu={this.handleContextMenu}/>
+            <div id="calico-divsm" onContextMenu={this.handleContextMenu} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd}/>
 
             { this.state.showContextMenu &&
               <div style={style.cat}>{this.state.catSays}</div>
@@ -157,30 +230,36 @@ class Build extends Component {
                 <span>
                 some places you can find me:<br />
                   <i className="fa fa-github" aria-hidden="true" /> <a href="http://www.github.com/sunnythere">github</a><br />
-                  <i className="fa fa-linkedin-square" aria-hidden="true"></i> <a href="http://www.linkedin.com/in/yawenalice">linkedin</a><br/>
-                  <i className="fa fa-instagram" aria-hidden="true"></i> <a href="http://www.instagram.com/hyphenlowercase">instagram</a>
+                  <i className="fa fa-linkedin-square" aria-hidden="true" /> <a href="http://www.linkedin.com/in/yawenalice">linkedin</a><br/>
+                  <i className="fa fa-instagram" aria-hidden="true" /> <a href="http://www.instagram.com/hyphenlowercase">instagram</a>
                 </span>
               </div>
             }
 
-            <div id="infostar"><a onClick={this.toggleMsg('showInfo')} className="nostylelink">*</a>
+          </div>
+
+
+          <div id="build2img" style={style.build2}/>
+          <div id="build2aimg" />
+
+
+          <div id="infostar"><a onClick={this.toggleMsg('showInfo')} className="nostylelink">*</a>
 
               { this.state.showInfo &&
-                <div id="infobubble">The cityscape cutouts were created from pages of a 2010 edition of one of my favoriate periodicals, <a href="https://www.good.is/" className="darkgrey">Good Magazine</a>. The edition is about finding work… published back when Good still published paper things regularly.  I had it laying around. Because apparently I am sometimes a hoarder.
+                <div id="infobubble">
+                * The cityscape cutouts were created from pages of a 2010 edition (the Work issue) of one of my favorite periodicals, <a href="https://www.good.is/" className="darkgrey">Good Magazine</a>. I had it laying around. Because apparently I am sometimes a hoarder.
+                <br />
+                * The background gradient uses <a href="https://sunrise-sunset.org/api" className="darkgrey">the sunrise and sunset API</a>.
+                <br />
+                * Things are still changing and moving...
+                <br />
+                <span className="bottom">--> hyphenlowercase at gmail</span>
                 </div>
               }
             </div>
-
-          </div>
-
-
-          <div className="overflow">
-            <div id="build2img"/>
-            <div id="build2aimg" />
-          </div>
 
       </div>
 
     )
   }
-}
+})

@@ -49,6 +49,4 @@ export default class Scroll extends Component {
 
 }
 
-  Scroll.propTypes = {
-    handleScroll: React.PropTypes.func
-  }
+

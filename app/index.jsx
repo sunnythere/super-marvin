@@ -1,37 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import moment from 'moment'
 import {Provider} from 'react-redux'
 import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
 import store from './store'
 
 import Enter from './components/Enter'
-import Build from './components/Build'
-
-
 import SignUp from './components/SignUp'
-import Add from './components/Add'
-
-// import OneCat from './OneCat'
 import EnterVisitor from './components/EnterVisitor'
 import Scroll from './components/Scroll'
 import Scroll1 from './components/Scroll1'
-import Navbar from './components/Navbar'
-import Navbar2 from './components/Navbar2'
 import VisitorsContainer from './components/VisitorsContainer'
 import VisitorHistory from './components/VisitorHistory'
-import CatFlick from './components/CatFlick'
-import Time from './components/Time'
 import List from './components/List'
-
 import EnterName from './components/EnterName'
 import NameBank from './components/NameBank'
-
 
 
 import { getAllCats, getOneCat } from './reducers/feline'
 import { getAllNames, getAllTags } from './reducers/names'
 import { getAllVisitorsToday, updateVisitorLog } from './reducers/visitors'
 import { setCurrentUser } from './reducers/user'
+import { setTodaysDate } from './reducers/date'
+import { getAstroInfo } from './reducers/weather'
 
 import { auth } from './firebase'
 
@@ -46,7 +37,6 @@ auth().onAuthStateChanged(function(user) {
 });
 
 
-
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -57,6 +47,11 @@ ga('send', 'pageview');
 
 
 
+const onBuildEnter = () => {
+  let today = moment().format("YYYY-MM-DD")
+  store.dispatch(setTodaysDate(today))
+  store.dispatch(getAstroInfo(today))
+}
 
 const onEnterNames = () => {
   store.dispatch(getAllNames())
@@ -80,7 +75,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
       <Route path='/' component={Enter} >
         <IndexRedirect to="/build" />
-        <Route path="/build" component={Scroll1}/>
+        <Route path="/build" component={Scroll1} onEnter={onBuildEnter} />
 
       </Route>
 
