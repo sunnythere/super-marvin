@@ -6,7 +6,6 @@ const rootReducer = combineReducers({
   visitors: require('./visitors').default,
   cost: require('./cost').default,
   names: require('./names').default,
-  weather: require('./weather').default,
   date: require('./date').default
 });
 

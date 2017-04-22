@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
+
 import {Provider} from 'react-redux'
 import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
 import store from './store'
 
-import Enter from './components/Enter'
 import SignUp from './components/SignUp'
 import EnterVisitor from './components/EnterVisitor'
 import Scroll from './components/Scroll'
-import Scroll1 from './components/Scroll1'
+
 import VisitorsContainer from './components/VisitorsContainer'
 import VisitorHistory from './components/VisitorHistory'
 import List from './components/List'
@@ -22,7 +22,6 @@ import { getAllNames, getAllTags } from './reducers/names'
 import { getAllVisitorsToday, updateVisitorLog } from './reducers/visitors'
 import { setCurrentUser } from './reducers/user'
 import { setTodaysDate } from './reducers/date'
-import { getAstroInfo } from './reducers/weather'
 
 import { auth } from './firebase'
 
@@ -47,12 +46,6 @@ ga('send', 'pageview');
 
 
 
-const onBuildEnter = () => {
-  let today = moment().format("YYYY-MM-DD")
-  store.dispatch(setTodaysDate(today))
-  store.dispatch(getAstroInfo(today))
-}
-
 const onEnterNames = () => {
   store.dispatch(getAllNames())
   store.dispatch(getAllTags())
@@ -63,20 +56,14 @@ const onLeaveNames = () => {
   store.dispatch(getAllTags()())
 }
 
-const onEnterOneCat = (nextState) => {
-  store.dispatch(getOneCat("-KcpgqxCFG2mogPCobYh"))
-                           //nextState.params.name))
-}
-
-
 
 ReactDOM.render(
   <Provider store={store}>
   <Router history={browserHistory}>
-      <Route path='/' component={Enter} >
-        <IndexRedirect to="/build" />
-        <Route path="/build" component={Scroll1} onEnter={onBuildEnter} />
-
+      <Route path='/' component={EnterName} >
+        <IndexRedirect to="/names" />
+          <Route component={Scroll} />
+          <Route path='/names' component={NameBank} onEnter={onEnterNames} onLeave={onLeaveNames}/>
       </Route>
 
       <Route path='/visit' component={EnterVisitor} />
@@ -90,12 +77,6 @@ ReactDOM.render(
         </Route>
         <Route path="/signup" component={SignUp} />
 
-      </Route>
-
-      <Route path='/name-enter' component={EnterName} />
-      <Route component={EnterName}>
-        <Route component={Scroll} />
-        <Route path='/names' component={NameBank} onEnter={onEnterNames} onLeave={onLeaveNames}/>
       </Route>
 
     </Router>
